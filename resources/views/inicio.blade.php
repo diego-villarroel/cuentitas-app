@@ -6,9 +6,9 @@
                     <div class="card-content white-text">
                         <span class="card-title">Cauciones</span>
                         <p>Activos</p>
-                        <h5>2</h5>
+                        <h5>{{$resumen_cau->activos}}</h5>
                         <p>Ganancias de este mes:</p>
-                        <h5>$50</h5>
+                        <h5>${{$resumen_cau->ganancias_mensuales}}</h5>
                     </div>
                     <div class="card-action center-align">
                         <a class="btn-floating waves-effect waves-light modal-trigger" data-target="modal_add_caucion"><i class="material-icons">add</i></a>
@@ -20,9 +20,9 @@
                     <div class="card-content white-text">
                         <span class="card-title">Plazos Fijos</span>
                         <p>Activos</p>
-                        <h5>2</h5>
+                        <h5>{{$resumen_pf->activos}}</h5>
                         <p>Ganancias esperadas:</p>
-                        <h5>$50</h5>
+                        <h5>${{$resumen_pf->ganancias}}</h5>
                     </div>
                     <div class="card-action center-align">
                         <a class="btn-floating waves-effect waves-light modal-trigger" data-target="modal_add_pf"><i class="material-icons">add</i></a>
@@ -69,7 +69,7 @@
                         <h5>$50</h5>
                     </div>
                     <div class="card-action center-align">
-                        <a class="btn-floating waves-effect waves-light modal-trigger" data-target="modal_add_tarjeta"><i class="material-icons">add</i></a>
+                        <a class="btn-floating waves-effect waves-light modal-trigger" data-target="modal_add_resumen_tarjeta"><i class="material-icons">add</i></a>
                     </div>
                 </div>
             </div>

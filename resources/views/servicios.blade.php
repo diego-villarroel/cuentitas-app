@@ -1,11 +1,11 @@
 @include('/generico/header')
     <section class="cuerpo container">
         <div class="row">
-            <div class="col s12 m10">
+            <div class="col s12 m7">
                 <h4>Servicios</h4>
             </div>
-            <div class="col s12 m2">
-                <button class="btn waves-effect waves-light modal-trigger" data-target="modal_add_servicio">Nuevo_Servicio</button>
+            <div class="col s12 m5 right-align">
+                <button class="btn waves-effect waves-light modal-trigger" data-target="modal_add_servicio">Nuevo Servicio</button>
             </div>
         </div>
         <div class="row">

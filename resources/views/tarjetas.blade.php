@@ -1,23 +1,25 @@
 @include('/generico/header')
     <section class="cuerpo container">
         <div class="row">
-            <div class="col s12 m10">
+            <div class="col s12 m7">
                 <h4>Tarjetas</h4>
             </div>
-            <div class="col s12 m2">
-                <button class="btn waves-effect waves-light modal-trigger" data-target="modal_add_servicio">NUEVA_TARJETA</button>
+            <div class="col s12 m5 right-align">
+                <button class="btn waves-effect waves-light modal-trigger" data-target="modal_add_servicio">Nuevo Resumen Tarjeta</button>
             </div>
         </div>
         <div class="row">
             <div class="col s12 m4">
                 <div class="card blue-grey darken-1">
                     <div class="card-content white-text">
-                        <span class="card-title">Ciudad Visa</span>
+                        <span class="card-title">Ciudad <br>Visa</span>
                         <p>Estado del mes</p>
                         <h5>Pagada</h5>
                         <p>Monto:</p>
                         <h5>$50</h5>
                         <p>Ùltima actualización:</p>
+                        <h5>03/02/2024</h5>
+                        <p>Vencimiento:</p>
                         <h5>03/02/2024</h5>
                     </div>
                 </div>
@@ -25,12 +27,14 @@
             <div class="col s12 m4">
                 <div class="card blue-grey darken-1">
                     <div class="card-content white-text">
-                        <span class="card-title">Galicia Visa</span>
+                        <span class="card-title">Galicia <br>Visa</span>
                         <p>Estado del mes</p>
                         <h5>Pagada</h5>
                         <p>Monto:</p>
                         <h5>$50</h5>
                         <p>Ùltima actualización:</p>
+                        <h5>03/02/2024</h5>
+                        <p>Vencimiento:</p>
                         <h5>03/02/2024</h5>
                     </div>
                 </div>
@@ -38,12 +42,14 @@
             <div class="col s12 m4">
                 <div class="card blue-grey darken-1">
                     <div class="card-content white-text">
-                        <span class="card-title">Galicia Mastercad</span>
+                        <span class="card-title">Galicia <br>Mastercad</span>
                         <p>Estado del mes</p>
                         <h5>Pagada</h5>
                         <p>Monto:</p>
                         <h5>$50</h5>
                         <p>Ùltima actualización:</p>
+                        <h5>03/02/2024</h5>
+                        <p>Vencimiento:</p>
                         <h5>03/02/2024</h5>
                     </div>
                 </div>

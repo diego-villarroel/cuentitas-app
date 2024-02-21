@@ -22,3 +22,6 @@ Route::get('/plazos-fijos','AhorrappController@plazosFijosVista');
 Route::get('/inversiones','AhorrappController@inversionesVista');
 Route::get('/servicios','AhorrappController@serviciosVista');
 Route::get('/tarjetas','AhorrappController@tarjetasVista');
+Route::post('/agregar-plazo-fijo','PlazosFijosController@addPlazoFijo');
+Route::post('/agregar-caucion','CaucionesController@addCaucion');
+Route::post('/borrar-caucion','CaucionesController@borrarCaucion');

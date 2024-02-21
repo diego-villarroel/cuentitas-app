@@ -2,11 +2,11 @@
     <section class="cuerpo container">
 
         <div class="row">
-            <div class="col s12 m10">
+            <div class="col s12 m7">
                 <h4>Plazos Fijos</h4>
             </div>
-            <div class="col s12 m2">
-                <button class="btn waves-effect waves-light modal-trigger" data-target="modal_add_pf">Nueva_Plazo_Fijo</button>
+            <div class="col s12 m5 right-align">
+                <button class="btn waves-effect waves-light modal-trigger" data-target="modal_add_pf">Nuevo Plazo Fijo</button>
             </div>
         </div>
         <div class="row center-align">

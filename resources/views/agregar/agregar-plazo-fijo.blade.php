@@ -1,5 +1,6 @@
-<form id="add-caucion" class="row">
+<form id="add-plazo-fijo" class="row" method="post">
     {{ csrf_field() }}
+    <input type="hidden">
     <div class="input-field col s12 m6">
         <input id="ingresado" name="ingresado" type="text" class="validate">
         <label for="ingresado">Monto Ingresado</label>
@@ -15,11 +16,9 @@
     <div class="input-field col s12 m6">
         <select id="banco" name="banco">
             <option value="" disabled selected>Elige una opción</option>
-            <option value="galicia">Galicia</option>
-            <option value="ciudad">Ciudad</option>
-            <option value="hipotecario">Hipotecario</option>
-            <option value="credicoop">Credicoop</option>
-            <option value="nacion">Nación</option>
+            @foreach ($lista_bancos as $ban)
+                <option value="{{$ban->id_bancos}}">{{$ban->nombre}}</option>
+            @endforeach
         </select>
         <label>Banco</label>
     </div>
@@ -31,13 +30,23 @@
         </select>
         <label>Tipo de Plazo Fijo</label>
     </div>
-    <div class="input-field col s12 m6">
+    <div class="input-field col s12 m4">
         <input id="fecha" name="fecha" type="date" class="validate">
         <label for="fecha">Fecha de creación</label>
     </div>
-    <div class="input-field col s12 m6">
+    <div class="input-field col s12 m4">
         <input id="dias" name="dias" type="number" class="validate">
         <label for="dias">Días</label>
+    </div>
+    <div class="input-field col s12 m4 center-align">
+        <div class="switch">
+            <label>
+                Inactivo
+                <input type="checkbox" id="activo-plazo-fijo" name="activo" value="0">
+                <span class="lever"></span>
+                Activo
+            </label>
+        </div>
     </div>
     <div class="col s12 right-align">
         <button type="submit" class="waves-effect waves-light btn">Agregar</button>
