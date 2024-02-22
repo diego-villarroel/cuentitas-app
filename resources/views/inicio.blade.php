@@ -22,7 +22,7 @@
                         <p>Activos</p>
                         <h5>{{$resumen_pf->activos}}</h5>
                         <p>Ganancias esperadas:</p>
-                        <h5>${{$resumen_pf->ganancias}}</h5>
+                        <h5>${{$resumen_pf->ganancia_activa}}</h5>
                     </div>
                     <div class="card-action center-align">
                         <a class="btn-floating waves-effect waves-light modal-trigger" data-target="modal_add_pf"><i class="material-icons">add</i></a>

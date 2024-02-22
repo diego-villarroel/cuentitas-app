@@ -10,8 +10,15 @@
         <label for="devolver">Monto a Devolver</label>
     </div>
     <div class="input-field col s12">
-        <input id="persona" name="persona" type="text" class="validate">
-        <label for="persona">Propietario</label>
+        <select id="persona" name="persona">
+            <option value="" disabled selected>Elige una opción</option>
+            @foreach ($lista_personas as $pollito)
+                <option value="{{$pollito->id_pollito}}">{{$pollito->nombre}} {{$pollito->apellido}}</option>
+            @endforeach
+        </select>
+        <label>Propietario</label>
+        <!-- <input id="persona" name="persona" type="text" class="validate">
+        <label for="persona">Propietario</label> -->
     </div>
     <div class="input-field col s12 m6">
         <select id="banco" name="banco">
@@ -25,8 +32,9 @@
     <div class="input-field col s12 m6">
         <select id="tipo_pf" name="tipo_pf">
             <option value="" disabled selected>Elige una opción</option>
-            <option value="1">Tradicional</option>
-            <option value="2">UVA</option>
+            @foreach ($tipos_pf as $pf)
+                <option value="{{$pf->id_tipo_pf}}">{{$pf->nombre_tipo_pf}}</option>
+            @endforeach
         </select>
         <label>Tipo de Plazo Fijo</label>
     </div>
@@ -52,3 +60,9 @@
         <button type="submit" class="waves-effect waves-light btn">Agregar</button>
     </div>
 </form>
+<div class="deep-purple lighten-1 hide" id="exito-add-pf">
+    <p class="center-align">Se agrego con éxito el Plazo Fijo. Redirigiendo...</p>
+    <div class="progress">
+        <div class="indeterminate"></div>
+    </div>
+</div>

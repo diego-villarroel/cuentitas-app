@@ -5,7 +5,7 @@
                 <h4>Tarjetas</h4>
             </div>
             <div class="col s12 m5 right-align">
-                <button class="btn waves-effect waves-light modal-trigger" data-target="modal_add_servicio">Nuevo Resumen Tarjeta</button>
+                <button class="btn waves-effect waves-light modal-trigger" data-target="modal_add_resumen_tarjeta">Nuevo Resumen Tarjeta</button>
             </div>
         </div>
         <div class="row">

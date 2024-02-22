@@ -1,4 +1,4 @@
-<form id="add-caucion" class="row">
+<form id="add-resumen-tarjeta" class="row">
     {{ csrf_field() }}
     <div class="input-field col s12 m6">
         <select id="tipo_servicio" name="tipo_servicio">

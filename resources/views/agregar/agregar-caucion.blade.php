@@ -8,9 +8,14 @@
         <input id="devolver" name="devolver" type="text" class="validate">
         <label for="devolver">Monto a Devolver</label>
     </div>
-    <div class="input-field col s12">
-        <input id="nombre" name="nombre" type="text" class="validate">
-        <label for="nombre">Propietario</label>
+    <div class="input-field col s12 m12">
+        <select id="tipo_pf" name="nombre" id="nombre">
+            <option value="" disabled selected>Elige una opción</option>
+            @foreach ($lista_personas as $persona)
+                <option value="{{$persona->id_pollito}}">{{$persona->nombre}} {{$persona->apellido}}</option>
+            @endforeach
+        </select>
+        <label>Propietario</label>
     </div>
     <div class="input-field col s12 m4">
         <input id="fecha" name="fecha" type="date" class="validate">

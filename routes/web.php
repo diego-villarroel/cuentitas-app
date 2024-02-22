@@ -25,3 +25,4 @@ Route::get('/tarjetas','AhorrappController@tarjetasVista');
 Route::post('/agregar-plazo-fijo','PlazosFijosController@addPlazoFijo');
 Route::post('/agregar-caucion','CaucionesController@addCaucion');
 Route::post('/borrar-caucion','CaucionesController@borrarCaucion');
+Route::post('/borrar-plazo-fijo','PlazosFijosController@borrarPlazoFijo');
