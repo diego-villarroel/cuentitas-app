@@ -14,9 +14,9 @@
                     <div class="card-content white-text">
                         <span class="card-title">Plazos Fijos Tradicionales</span>
                         <p>Activos</p>
-                        <h5>2</h5>
+                        <h5>{{$resumen_pf->activos_tradi}}</h5>
                         <p>Ganancias:</p>
-                        <h5>$50</h5>
+                        <h5>${{$resumen_pf->ganancia_tradi}}</h5>
                     </div>
                 </div>
             </div>
@@ -25,9 +25,9 @@
                     <div class="card-content white-text">
                         <span class="card-title">Plazos Fijos UVA</span>
                         <p>Activos</p>
-                        <h5>1</h5>
+                        <h5>{{$resumen_pf->activos_uva}}</h5>
                         <p>Ganancias:</p>
-                        <h5>$50</h5>
+                        <h5>${{$resumen_pf->ganancia_uva}}</h5>
                     </div>
                 </div>
             </div>
@@ -130,7 +130,7 @@
                                     <td>$250.000</td>
                                     <td>Pagado</td>
                                     <td>
-                                        <button>Ver Detalle</button>
+                                        <button class="btn wave-effect"><i class="material-icons dp48">edit</i></button>
                                         <button>Desactivar</button>
                                     </td>
                                 </tr>

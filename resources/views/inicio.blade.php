@@ -64,9 +64,9 @@
                     <div class="card-content white-text">
                         <span class="card-title">Tarjetas</span>
                         <p>Sin pagar este mes</p>
-                        <h5>0</h5>
+                        <h5>{{$resumen_tarjetas->impagas}}</h5>
                         <p>Monto actual:</p>
-                        <h5>$50</h5>
+                        <h5>${{$resumen_tarjetas->saldo}}</h5>
                     </div>
                     <div class="card-action center-align">
                         <a class="btn-floating waves-effect waves-light modal-trigger" data-target="modal_add_resumen_tarjeta"><i class="material-icons">add</i></a>

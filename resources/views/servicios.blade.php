@@ -5,10 +5,10 @@
                 <h4>Servicios</h4>
             </div>
             <div class="col s12 m5 right-align">
-                <button class="btn waves-effect waves-light modal-trigger" data-target="modal_add_servicio">Nuevo Servicio</button>
-            </div>
-            <div class="col s12 m5 right-align">
                 <button class="btn waves-effect waves-light modal-trigger" data-target="modal_add_factura">Nueva Factura</button>
+            </div>
+            <div class="col s12 m5 right-align" style="margin-top:20px">
+                <button class="btn waves-effect waves-light modal-trigger" data-target="modal_add_servicio">Nuevo Servicio</button>
             </div>
         </div>
         <div class="row">

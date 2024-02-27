@@ -32,6 +32,12 @@
         </div>
         @endif
         @if ( $_SERVER['REQUEST_URI'] == '/' || $_SERVER['REQUEST_URI'] == '/servicios' )
+        <div id="modal_add_factura" class="modal">
+            <div class="modal-content">
+                <h4>Nueva Factura</h4>
+                @include('/agregar/agregar-factura')
+            </div>
+        </div>
         <div id="modal_add_servicio" class="modal">
             <div class="modal-content">
                 <h4>Añadir Servicio</h4>
@@ -55,6 +61,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             M.AutoInit();
         });
+        // ============================== //
+        // ======== PLAZOS FIJOS ======== //
+        // ============================== //
         $('#activo-plazo-fijo').on('change',function(e){
             if (e.target.checked == true) {
                 e.target.value = 1;
@@ -141,8 +150,7 @@
                     }
                 }
             })
-        })
-        
+        })        
         $('.borrar-caucion').on('click',function(){
             let caucion_select = $(this).data('id-caucion');
             let caucion_fecha = $(this).data('fecha-caucion');
@@ -171,5 +179,117 @@
                 }
             })
         })
+        // ========================== //
+        // ======== TARJETAS ======== //
+        // ========================== //
+        // $('#activo-caucion').on('change',function(e){
+        //     if (e.target.checked == true) {
+        //         e.target.value = 1;
+        //     } else {
+        //         e.target.value = 0;
+        //     }
+        // })
+        $('#add-resumen-tarjeta').on('submit',function(e){
+            e.preventDefault();
+            // let inputactivo = $('#activo-caucion').val();
+            let formData = $(this).serialize();
+            $.ajax({
+                url:'/agregar-resumen-tarjeta',
+                method: 'post',
+                data: formData,
+                success: function(resp){
+                    if (resp == '1') {
+                        $('#exito-add-resumen-tarjeta').removeClass('hide');
+                        setInterval(() => {
+                            window.location.replace('/tarjetas');
+                        }, 3000);
+                    } else {
+                        console.log('error');
+                    }
+                }
+            })
+        });
+        $('.borrar-resumen').on('click',function(){
+            let resumen_select = $(this).data('id-resumen');
+            let periodo = $(this).data('periodo');
+            let monto = $(this).data('monto');
+            let vencimiento = $(this).data('vencimiento');
+            let tarjeta = $(this).data('tarjeta');
+            $('#periodo_resumen').text(periodo);
+            $('#monto_resumen').text(monto);
+            $('#tarjeta_resumen').text(tarjeta)
+            $('#vencimiento_resumen').text(vencimiento);
+            $('#frm-borrar-resumen [name="id_resumen"]').val(resumen_select);
+            
+        });
+        $('#confirm_borrar_resumen').on('click',function(){
+            $.ajax({
+                url: '/borrar-resumen-tarjeta',
+                method: 'post',
+                data: $('#frm-borrar-resumen').serialize(),
+                success: function(resp){
+                    if (resp == '1') {
+                        $('#exito-borrar-resumen').removeClass('hide');
+                        setInterval(() => {
+                            window.location.replace('/tarjetas');
+                        }, 2000);
+                    } else {
+                        console.log('error');
+                    }
+                }
+            })
+        });
+        $('.pagar-resumen').on('click',function(){
+            let resumen_select = $(this).data('id-resumen');
+            let periodo = $(this).data('periodo');
+            let monto = $(this).data('monto');
+            let vencimiento = $(this).data('vencimiento');
+            let tarjeta = $(this).data('tarjeta');
+            $('#periodo_resumen_pagar').text(periodo);
+            $('#monto_resumen_pagar').text(monto);
+            $('#tarjeta_resumen_pagar').text(tarjeta)
+            $('#vencimiento_resumen_pagar').text(vencimiento);
+            $('#frm-pagar-resumen [name="id_resumen"]').val(resumen_select);
+            
+        });
+        $('#confirm_pagar_resumen').on('click',function(){
+            $.ajax({
+                url: '/pagar-resumen-tarjeta',
+                method: 'post',
+                data: $('#frm-pagar-resumen').serialize(),
+                success: function(resp){
+                    if (resp == '1') {
+                        $('#exito-pagar-resumen').removeClass('hide');
+                        setInterval(() => {
+                            window.location.replace('/tarjetas');
+                        }, 2000);
+                    } else {
+                        console.log('error');
+                    }
+                }
+            })
+        });
+        // =========================== //
+        // ======== SERVICIOS ======== //
+        // =========================== //
+        $('#add-servicio').on('submit',function(e){
+            e.preventDefault();
+            let formData = $(this).serialize();
+            $.ajax({
+                url:'/agregar-servicio',
+                method: 'post',
+                data: formData,
+                success: function(resp){
+                    if (resp == '1') {
+                        $('#exito-add-servicio').removeClass('hide');
+                        setInterval(() => {
+                            window.location.replace('/servicios');
+                        }, 3000);
+                    } else {
+                        console.log('error');
+                    }
+                }
+            })
+        });
     </script>
 </html>

@@ -10,6 +10,8 @@ class PlazosFijosController extends Controller
     public static function dataResumenPlazoFijo(){
         $data_plazos_fijos = DB::select("SELECT * from plazos_fijos ORDER BY tipo_plazo_fijo");
         $activo = 0;
+        $activo_tradi = 0;
+        $activo_uva = 0;
         $ganancia_activa = 0;
         $ganancia_tradi = 0;
         $ganancia_uva = 0;
@@ -21,14 +23,22 @@ class PlazosFijosController extends Controller
                 }
                 if ($pf->tipo_plazo_fijo == 2) {
                     $ganancia_tradi += $pf->ganancia_neta;
+                    if ($pf->activo  == 1) {
+                        $activo_tradi++;
+                    }
                 } else {
                     $ganancia_uva += $pf->ganancia_neta;
+                    if ($pf->activo  == 1) {
+                        $activo_uva++;
+                    }
                 }
                 
             }
         }
         $resumen_plazos_fijos = array(
             'activos' => $activo,
+            'activos_tradi' => $activo_tradi,
+            'activos_uva' => $activo_uva,
             'ganancia_activa' => $ganancia_activa,
             'ganancia_tradi' => $ganancia_tradi,
             'ganancia_uva' => $ganancia_uva,
