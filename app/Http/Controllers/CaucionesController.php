@@ -8,15 +8,19 @@ use DB;
 class CaucionesController extends Controller
 {
     public static function dataResumenCauciones(){
-        $data_cauciones = DB::select("SELECT * from cauciones ORDER BY creado");
-        $activo = 0;
-        $cauciones_mensuales = 0;
-        $ganancia_total = 0;
-        $ganancia_mensual = 0;
-        $cantidad_cauciones = 0;
-        $mes = date('m');
-        $hoy = new \Datetime();
+        $data_cauciones = DB::select("SELECT * from cauciones ORDER BY periodo DESC");
         if (!empty($data_cauciones)) {
+            $activo = 0;
+            $cauciones_mensuales = 0;
+            $ganancia_total = 0;
+            $ganancia_mensual = 0;
+            $cantidad_cauciones = 0;
+            $mes = date('m');
+            $hoy = new \Datetime();
+            $data_cauciones_por_periodo = [];
+            $aux = [];
+            $periodo = $data_cauciones[0]->periodo;
+            $ganancia_neta_periodo = 0;
             foreach ($data_cauciones as $cau) {
                 $cantidad_cauciones++;
                 $ganancia_total += $cau->ganancia_neta;
@@ -32,15 +36,29 @@ class CaucionesController extends Controller
                     $ganancia_mensual += $cau->ganancia_neta;
                     $cauciones_mensuales ++;
                 }
+                if ($periodo == $cau->periodo){
+                    array_push($aux,$cau);
+                    $ganancia_neta_periodo += $cau->ganancia_neta;
+                } else {
+                    $aux['total'] = $ganancia_neta_periodo;
+                    $data_cauciones_por_periodo[$periodo] = $aux;
+                    $periodo = $cau->periodo;
+                    $aux = [];
+                    $ganancia_neta_periodo = 0;
+                }
             }
+            $aux['total'] = $ganancia_neta_periodo;
+            $data_cauciones_por_periodo[$periodo] = $aux;
         }
+        // dd($data_cauciones_por_periodo);
         $resumen_cauciones = array(
             'total_cantidad_cauciones' => $cantidad_cauciones,
             'activos' => $activo,
             'cauciones_mensuales' => $cauciones_mensuales,
             'ganancias_mensuales' => $ganancia_mensual,
             'ganancia_total' => $ganancia_total,
-            'data_completa' => $data_cauciones
+            'data_completa' => $data_cauciones,
+            'data_cauciones_por_periodo' => $data_cauciones_por_periodo
         );
         $resumen_cauciones = (object)$resumen_cauciones;
         return $resumen_cauciones;

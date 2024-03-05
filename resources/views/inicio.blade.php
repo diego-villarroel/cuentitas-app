@@ -50,9 +50,9 @@
                     <div class="card-content white-text">
                         <span class="card-title">Servicios</span>
                         <p>Sin pagar este mes</p>
-                        <h5>3</h5>
+                        <h5>{{$data_facturas->impagas}}</h5>
                         <p>Monto total:</p>
-                        <h5>$50</h5>
+                        <h5>${{$data_facturas->monto_total}}</h5>
                     </div>
                     <div class="card-action center-align">
                         <a class="btn-floating waves-effect waves-light modal-trigger" data-target="modal_add_servicio"><i class="material-icons">add</i></a>

@@ -31,6 +31,10 @@ Route::get('/inversiones','AhorrappController@inversionesVista');
 // SERVICIOS
 Route::get('/servicios','AhorrappController@serviciosVista');
 Route::post('/agregar-servicio','ServiciosController@addServicio');
+Route::post('/borrar-servicio','ServiciosController@addServicio');
+Route::post('/agregar-factura','ServiciosController@addFactura');
+Route::post('/borrar-factura','ServiciosController@borrarFactura');
+Route::post('/pagar-factura','ServiciosController@pagarFactura');
 // TARJETAS
 Route::get('/tarjetas','AhorrappController@tarjetasVista');
 Route::post('/agregar-resumen-tarjeta','TarjetasController@addResumenTarjeta');

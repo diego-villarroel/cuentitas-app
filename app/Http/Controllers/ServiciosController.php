@@ -9,21 +9,17 @@ class ServiciosController extends Controller
 {
     public static function dataResumenServicios(){
         $data_resumen = DB::select("SELECT * from resumen_tarjetas ORDER BY id_tarjeta, periodo DESC");
-
-        // $lista_tarjetas = DB::select("SELECT * from tarjetas");
         $ultimo_periodo = date('m-y');
         $saldo_total = 0;
         $impagas = 0;
-        // foreach ($lista_tarjetas as $tarjeta) {
-            foreach ($data_resumen as $resumen) {            
-                if ( $resumen->periodo == $ultimo_periodo ) {
-                    $saldo_total += $resumen->monto;
-                    if ($resumen->activo == 1 && $resumen->pagado == 0) {
-                        $impagas++;
-                    }
+        foreach ($data_resumen as $resumen) {            
+            if ( $resumen->periodo == $ultimo_periodo ) {
+                $saldo_total += $resumen->monto;
+                if ($resumen->activo == 1 && $resumen->pagado == 0) {
+                    $impagas++;
                 }
             }
-        // }
+        }
 
         $data_resumen = array(
             'impagas' => $impagas,
@@ -32,6 +28,39 @@ class ServiciosController extends Controller
         );
         $data_resumen = (object)$data_resumen;
         return $data_resumen;
+    }
+
+    public static function dataFacturas() {
+        $servicios = DB::select("SELECT * FROM servicios");
+        $data_por_servicio = [];
+        $data_completa = DB::select("SELECT * FROM facturas_servicio ORDER BY id_servicio, vencimiento DESC");
+        $impagas = 0;
+        $saldo_total = 0;
+        $lista_vencimientos = [];
+        foreach ($servicios as $k => $serv) {
+            $id_serv = $serv->id_servicio;
+            $facturas_serv = [];
+            foreach ($data_completa as $factura) {
+                if ($id_serv == $factura->id_servicio ) {
+                    array_push($facturas_serv,$factura);
+                }
+                if ($k == 0 && $factura->pagado == 0) {
+                    $impagas++;
+                    $saldo_total += $factura->monto;
+                    array_push($lista_vencimientos,$serv->nombre_servicio.' '.$factura->vencimiento);
+                }
+            }
+            $data_por_servicio[$id_serv] = $facturas_serv;
+            // $data_por_servicio[$serv->id_servicio] = DB::select("SELECT * FROM facturas_servicio WHERE id_servicio = ".$serv->id_servicio." ORDER BY vencimiento ASC");
+        }
+        $data_facturas = array(
+            'impagas' => $impagas,
+            'monto_total' => $saldo_total,
+            'data_completa' => $data_completa,
+            'data_por_servicio' => $data_por_servicio,
+        );
+        $data_facturas = (object)$data_facturas;
+        return $data_facturas;
     }
 
     public static function addServicio(){
@@ -61,13 +90,28 @@ class ServiciosController extends Controller
         }
     }
 
-    public static function pagarResumenTarjeta(){
-        $id_pf = Request::input('id_resumen');
-        if ( !empty($id_pf) ) {
-            $temp = DB::delete("UPDATE FROM resumen_tarjetas SET pagado = 1 WHERE id_resumen_tarjeta = ".$id_pf);
+    public static function pagarFactura(){
+        $id_factura = Request::input('id_factura');
+        if ( !empty($id_factura) ) {
+            $temp = DB::update("UPDATE facturas_servicio SET pagado = 1 WHERE id_factura = ".$id_factura);
             return 1;
         } else {
             return 0;
         }
+    }
+
+    public static function addFactura() {
+        $servicio = Request::input('servicio');
+        $valor = Request::input('valor');
+        $vencimiento_1 = Request::input('vencimiento_1');
+        $vencimiento_2 = Request::input('vencimiento_2') == '' ? "NULL" : "'".Request::input('vencimiento_2')."'";
+        $valor_mora = Request::input('valor_mora') == '' ? "NULL" : Request::input('valor_mora');
+
+        if ( !empty($servicio) ) {
+            // Insert en DDBB
+            $temp = DB::insert("INSERT into facturas_servicio (id_servicio,monto,vencimiento,segundo_vencimiento,monto_mora) VALUES(".$servicio.",".$valor.",'".$vencimiento_1."',".$vencimiento_2.",".$valor_mora.")");
+            return 1;
+        }
+
     }
 }

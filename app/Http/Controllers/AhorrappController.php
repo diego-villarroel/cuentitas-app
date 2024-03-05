@@ -6,6 +6,7 @@ use DB;
 use App\Http\Controllers\PlazosFijosController;
 use App\Http\Controllers\CaucionesController;
 use App\Http\Controllers\TarjetasController;
+use App\Http\Controllers\ServiciosController;
 
 class AhorrappController extends Controller
 {
@@ -14,10 +15,12 @@ class AhorrappController extends Controller
         $lista_personas = DB::select("SELECT * from pollitos");
         $lista_tipos_pf = DB::select("SELECT * from tipo_plazo_fijo");
         $lista_tarjetas = DB::select("SELECT * from tarjetas");
+        $lista_servicios = DB::select("SELECT * from servicios");
         $resumen_pf = PlazosFijosController::dataResumenPlazoFijo();
         $resumen_cau = CaucionesController::dataResumenCauciones();
         $resumen_tarjetas = TarjetasController::dataResumenTarjetas();
-        return view('inicio', ['resumen_pf' => $resumen_pf,'resumen_cau' => $resumen_cau,'lista_bancos' => $lista_bancos,'lista_personas' => $lista_personas,'lista_tarjetas' => $lista_tarjetas,'tipos_pf' => $lista_tipos_pf,'resumen_tarjetas' => $resumen_tarjetas]);
+        $data_facturas = ServiciosController::dataFacturas();
+        return view('inicio', ['resumen_pf' => $resumen_pf,'resumen_cau' => $resumen_cau,'lista_bancos' => $lista_bancos,'lista_personas' => $lista_personas,'lista_tarjetas' => $lista_tarjetas,'tipos_pf' => $lista_tipos_pf,'resumen_tarjetas' => $resumen_tarjetas,'lista_servicios' => $lista_servicios,'data_facturas' => $data_facturas]);
     }
 
     public static function caucionesVista(){
@@ -39,7 +42,9 @@ class AhorrappController extends Controller
     }
 
     public static function serviciosVista(){
-        return view('servicios');
+        $data_facturas = ServiciosController::dataFacturas();
+        $lista_servicios = DB::select("SELECT * from servicios ORDER BY nombre_servicio ASC");
+        return view('servicios',['lista_servicios' => $lista_servicios,'data_facturas' => $data_facturas]);
     }
 
     public static function tarjetasVista(){

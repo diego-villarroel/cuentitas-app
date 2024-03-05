@@ -39,9 +39,13 @@
         <button type="submit" class="waves-effect waves-light btn">Agregar</button>
     </div>
 </form>
-<div class="deep-purple lighten-1 hide" id="exito-add-caucion">
-    <p class="center-align">Se agrego con éxito la caucion. Redirigiendo...</p>
-    <div class="progress">
-        <div class="indeterminate"></div>
+<div id="exito-add-caucion" class="col s12 hide">
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title center-align">Caución agregada con éxito! Recargando</span>
+            <div class="progress" style="margin-top:20px;margin-bottom:20px">
+                <div class="indeterminate"></div>
+            </div>
+        </div>
     </div>
 </div>

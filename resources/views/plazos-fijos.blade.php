@@ -159,6 +159,16 @@
                     <button class="btn red waves-effect waves-light" id="confirm_borrar_pf">Borrar</button>
                 </div>
             </div>
+            <div id="exito-borrar-pf" class="col s12 hide">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title center-align">Borraste el Plazo Fijo seleccionado... Recargando</span>
+                        <div class="progress" style="margin-top:20px;margin-bottom:20px">
+                            <div class="indeterminate"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @include('/generico/footer')

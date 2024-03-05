@@ -25,11 +25,13 @@
         <button type="submit" class="waves-effect waves-light btn">Agregar</button>
     </div>
 </form>
-<div class="row center-align deep-purple lighten-1 hide" id="exito-add-resumen-tarjeta">
-    <p class="center-align">Se agrego con éxito la caucion. Redirigiendo...</p>
-    <div class="col s6">
-        <div class="progress">
-            <div class="indeterminate"></div>
+<div id="exito-add-resumen-tarjeta" class="col s12 hide">
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title center-align">Resumen de Tarjeta agregado con éxito! Recargando</span>
+            <div class="progress" style="margin-top:20px;margin-bottom:20px">
+                <div class="indeterminate"></div>
+            </div>
         </div>
     </div>
 </div>
