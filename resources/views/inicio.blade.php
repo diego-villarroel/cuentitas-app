@@ -1,5 +1,21 @@
 @include('/generico/header')
     <section class="cuerpo container">
+        @if ( !empty($data_facturas->vencidas) || !empty($resumen_tarjetas->resumenes_vencidos) )
+            @include ('/avisos/urgente')
+        
+        @endif
+        @if ( !empty($data_facturas->por_vencer) )
+        <div class="row">
+            <div class="col12">
+                <div class="card orange">
+                    <div class="card-content white-text">
+                        <span class="card-title">VENCEN MAÑANA, OJOTA</span>
+                        <p>Activos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
         <div class="row">
             <div class="col s12 m4">
                 <div class="card blue-grey darken-1">
@@ -34,12 +50,12 @@
                     <div class="card-content white-text">
                         <span class="card-title">Inversiones</span>
                         <p>Valor total:</p>
-                        <h5>$50</h5>
+                        <h5>$ -</h5>
                         <p> </p>
                         <h5> </h5>
                     </div>
                     <div class="card-action center-align">
-                        <a class="btn-floating waves-effect waves-light modal-trigger" data-target="modal_add_inversion"><i class="material-icons">add</i></a>
+                        <a class="btn-floating waves-effect waves-light" data-target="modal_add_inversion" disabled><i class="material-icons">add</i></a>
                     </div>
                 </div>
             </div>
@@ -55,7 +71,7 @@
                         <h5>${{$data_facturas->monto_total}}</h5>
                     </div>
                     <div class="card-action center-align">
-                        <a class="btn-floating waves-effect waves-light modal-trigger" data-target="modal_add_servicio"><i class="material-icons">add</i></a>
+                        <a class="btn-floating waves-effect waves-light modal-trigger" data-target="modal_add_factura"><i class="material-icons">add</i></a>
                     </div>
                 </div>
             </div>

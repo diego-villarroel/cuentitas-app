@@ -32,11 +32,15 @@ class ServiciosController extends Controller
 
     public static function dataFacturas() {
         $servicios = DB::select("SELECT * FROM servicios");
-        $data_por_servicio = [];
         $data_completa = DB::select("SELECT * FROM facturas_servicio ORDER BY id_servicio, vencimiento DESC");
+        $data_por_servicio = [];
+        $vencidas = [];
+        $por_vencer = [];
+        $lista_vencimientos = [];
+        $hoy = new \DateTime;
         $impagas = 0;
         $saldo_total = 0;
-        $lista_vencimientos = [];
+
         foreach ($servicios as $k => $serv) {
             $id_serv = $serv->id_servicio;
             $facturas_serv = [];
@@ -48,14 +52,19 @@ class ServiciosController extends Controller
                     $impagas++;
                     $saldo_total += $factura->monto;
                     array_push($lista_vencimientos,$serv->nombre_servicio.' '.$factura->vencimiento);
+                    $vencimiento_comparacion = new \DateTime($factura->vencimiento);
+                    if ( $vencimiento_comparacion < $hoy ) {
+                        array_push($vencidas,$factura);
+                    }
                 }
             }
             $data_por_servicio[$id_serv] = $facturas_serv;
-            // $data_por_servicio[$serv->id_servicio] = DB::select("SELECT * FROM facturas_servicio WHERE id_servicio = ".$serv->id_servicio." ORDER BY vencimiento ASC");
         }
         $data_facturas = array(
             'impagas' => $impagas,
             'monto_total' => $saldo_total,
+            'vencidas' => $vencidas,
+            'por_vencer' => $por_vencer,
             'data_completa' => $data_completa,
             'data_por_servicio' => $data_por_servicio,
         );
@@ -65,7 +74,8 @@ class ServiciosController extends Controller
 
     public static function addServicio(){
         $nombre_servicio = Request::input('nombre_empresa');
-        $tipo_servicio = Request::input('servicio');        
+        $tipo_servicio = Request::input('servicio');
+        $de_casa = Request::input('de_casa');
         $lista_servicios = DB::select("SELECT * from servicios WHERE nombre_servicio LIKE '".$nombre_servicio."' AND servicio LIKE '".$tipo_servicio."'");
         $existe = 0;
         if (!empty($lista_servicios)) {
@@ -73,7 +83,7 @@ class ServiciosController extends Controller
         }
         if ( !$existe ) {
             // Insert en DDBB
-            $temp = DB::insert("INSERT into servicios (nombre_servicio,servicio) VALUES('".$nombre_servicio."','".$tipo_servicio."')");
+            $temp = DB::insert("INSERT into servicios (nombre_servicio,servicio,de_casa) VALUES('".$nombre_servicio."','".$tipo_servicio."',".$de_casa.")");
             return 1;
         } else {
             return 0;

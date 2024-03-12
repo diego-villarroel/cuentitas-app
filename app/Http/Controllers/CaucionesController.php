@@ -8,7 +8,7 @@ use DB;
 class CaucionesController extends Controller
 {
     public static function dataResumenCauciones(){
-        $data_cauciones = DB::select("SELECT * from cauciones ORDER BY periodo DESC");
+        $data_cauciones = DB::select("SELECT * from cauciones ORDER BY creado DESC");
         if (!empty($data_cauciones)) {
             $activo = 0;
             $cauciones_mensuales = 0;
@@ -76,7 +76,9 @@ class CaucionesController extends Controller
             $porcentaje = ($ganancia*100)/$ingresado;
             $porcentaje_anual = ($porcentaje*30*12)/$dias;
             $mes = explode('-',$fecha)[1];
-            $temp = DB::insert("INSERT into cauciones (valor_ingresado,valor_devolucion,propietario,creado,dias,activo,ganancia_neta,porcentaje_ganancia,porcentaje_anual_ganancia,mes) VALUES(".$ingresado.",".$devolver.",'".$persona."','".$fecha."',".$dias.",".$activo.",".$ganancia.",".$porcentaje.",".$porcentaje_anual.",".$mes.")");
+            $periodo = new \DateTime($fecha);
+            $periodo = $periodo->format('m-y');
+            $temp = DB::insert("INSERT into cauciones (valor_ingresado,valor_devolucion,propietario,creado,dias,activo,ganancia_neta,porcentaje_ganancia,porcentaje_anual_ganancia,mes,periodo) VALUES(".$ingresado.",".$devolver.",'".$persona."','".$fecha."',".$dias.",".$activo.",".$ganancia.",".$porcentaje.",".$porcentaje_anual.",".$mes.",'".$periodo."')");
 
             return 1;
         } else {
