@@ -75,7 +75,7 @@ function pagarFactura() {
             data: $('#frm-pagar-factura').serialize(),
             success: function(resp){
                 if (resp == '1') {
-                    $('#exito-pagar-factura').removeClass('hide');
+                    M.toast({html: 'Pagado con éxito! Recargando ...', classes: 'rounded green'});
                     setInterval(() => {
                         window.location.replace('/servicios');
                     }, 2000);

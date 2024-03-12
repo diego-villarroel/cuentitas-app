@@ -66,7 +66,13 @@
                                 @foreach($data_facturas->data_por_servicio[$serv->id_servicio] as $factura)
                                 <tr>
                                     <td>${{$factura->monto}}</td>
-                                    <td>{{$factura->pagado}}</td>
+                                    <td>
+                                        @if ($factura->pagado == 1) 
+                                            <i class="material-icons dp48 tooltipped" data-tooltip="Pagado">check</i>
+                                        @else 
+                                            <i class="material-icons dp48 tooltipped" data-tooltip="Impago">money_off</i>
+                                        @endif
+                                    </td>
                                     <td>{{$factura->vencimiento}}</td>
                                     <td>
                                         <button class="btn wave-effect waves-light tooltipped" data-tooltip="Editar"><i class="material-icons dp48">edit</i></button>

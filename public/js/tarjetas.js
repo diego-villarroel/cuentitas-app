@@ -74,6 +74,7 @@ function pagarResumen() {
         
     });
     
+    console.log('pagar');
     $('#confirm_pagar_resumen').on('click',function(){
         $.ajax({
             url: '/pagar-resumen-tarjeta',
@@ -81,10 +82,10 @@ function pagarResumen() {
             data: $('#frm-pagar-resumen').serialize(),
             success: function(resp){
                 if (resp == '1') {
-                    $('#exito-pagar-resumen').removeClass('hide');
+                    M.toast({html: 'Pagado con éxito! Recargando ...', classes: 'rounded green'});
                     setInterval(() => {
                         window.location.replace('/tarjetas');
-                    }, 2000);
+                    }, 3000);
                 } else {
                     console.log('error');
                 }
