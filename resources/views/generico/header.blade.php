@@ -9,7 +9,7 @@
     <!-- CSS CUSTOM -->
     <link rel="stylesheet" href="/css/style.css">
     <link rel="shortcut icon" href="">
-    <title>Ahorrapp</title>
+    <title>Cuentitas APP</title>
 </head>
 <body>
     @include('/generico/menu')
