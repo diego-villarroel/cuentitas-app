@@ -68,7 +68,7 @@
                                     </td>
                                     <td class="center-align">@if( isset(explode('.',$cau->porcentaje_anual_ganancia)[1]) && strlen(explode('.',$cau->porcentaje_anual_ganancia)[1]) > 2 ) {{explode('.',$cau->porcentaje_anual_ganancia)[0]}}.{{substr(explode('.',$cau->porcentaje_anual_ganancia)[1],0,2)}} @else {{$cau->porcentaje_anual_ganancia}} @endif %</td>
                                     <td>
-                                        <button class="btn waves-effect waves-light "><i class="material-icons dp48">remove_red_eye</i></button>
+                                        <button class="btn waves-effect waves-light modal-trigger detalle-caucion" data-target="modal_detalle_caucion" data-id-caucion="{{$cau->id_caucion}}"><i class="material-icons dp48">remove_red_eye</i></button>
                                         <button class="btn waves-effect waves-light borrar-caucion modal-trigger" data-target="modal_confirm_borrar_caucion" data-id-caucion="{{$cau->id_caucion}}" data-fecha-caucion="{{$cau->creado}}" data-ganancia-caucion="{{$cau->ganancia_neta}}" data-porcentaje-caucion="{{$cau->porcentaje_anual_ganancia}}"><i class="material-icons dp48">delete_forever</i></button>
                                     </td>
                                 </tr>
@@ -107,4 +107,16 @@
             </div>
         </div>
     </div>
+
+
+    <form id="frm-detalle-caucion">
+        {{ csrf_field() }}
+        <input type="hidden" name="id_caucion">
+    </form>
+    <div id="modal_detalle_caucion" class="modal">
+            <div class="modal-content">
+                <h4>Detalle Caución</h4>
+                @include('/detalles/detalle-caucion')
+            </div>
+        </div>
 @include('/generico/footer')

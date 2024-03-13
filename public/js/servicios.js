@@ -20,7 +20,7 @@ function agregarFactura() {
             data: formData,
             success: function(resp){
                 if (resp == '1') {
-                    $('#exito-add-factura').removeClass('hide');
+                    M.toast({html: 'Factura agregada con éxito! Recargando ...', classes: 'rounded green'});
                     setInterval(() => {
                         window.location.replace('/servicios');
                     }, 3000);
@@ -43,7 +43,7 @@ function addServicio() {
             data: formData,
             success: function(resp){
                 if (resp == '1') {
-                    $('#exito-add-servicio').removeClass('hide');
+                    M.toast({html: 'Servicio agregado con éxito! Recargando ...', classes: 'rounded green'});
                     setInterval(() => {
                         window.location.replace('/servicios');
                     }, 3000);
@@ -75,7 +75,7 @@ function pagarFactura() {
             data: $('#frm-pagar-factura').serialize(),
             success: function(resp){
                 if (resp == '1') {
-                    M.toast({html: 'Pagado con éxito! Recargando ...', classes: 'rounded green'});
+                    M.toast({html: 'Pagaste la Factura con éxito! Recargando ...', classes: 'rounded green'});
                     setInterval(() => {
                         window.location.replace('/servicios');
                     }, 2000);

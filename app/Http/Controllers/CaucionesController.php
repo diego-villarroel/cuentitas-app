@@ -95,4 +95,13 @@ class CaucionesController extends Controller
             return 0;
         }
     }
+
+    public static function detalleCaucion(){
+        $id_caucion = Request::input('id_caucion');
+        if ( !empty($id_caucion) ) {
+            $data_caucion = DB::select("SELECT * from cauciones WHERE id_caucion = ".$id_caucion);
+
+            return json_encode($data_caucion);
+        }
+    }
 }

@@ -33,6 +33,13 @@ body {
     width: 100%
 }
 
+.menu {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    height: 100px;
+}
+
 .mobile-menu {
     display: none;
 }

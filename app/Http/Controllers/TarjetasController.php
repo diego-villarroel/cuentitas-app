@@ -19,17 +19,12 @@ class TarjetasController extends Controller
                 $vencimiento = new \Datetime($resumen->vencimiento);
                 if ( $vencimiento < $hoy ) {
                     array_push($resumenes_vencidos,$resumen);
-                }
-                if ( $resumen->periodo == $ultimo_periodo ) {
                     $saldo_total += $resumen->monto;
-                    if ($resumen->activo == 1) {
-                        $impagas++;
-                    }
+                    $impagas++;
                 }
             }         
             
         }
-
         $data_resumen = array(
             'impagas' => $impagas,
             'saldo' => $saldo_total,

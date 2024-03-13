@@ -95,6 +95,7 @@
         <script>
             agregarCaucion();
             borrarCaucion();
+            detalleCaucion();
         </script>
     @elseif ( $_SERVER['REQUEST_URI'] == '/plazos-fijos' )
         <script src="/js/plazos_fijos.js"></script>

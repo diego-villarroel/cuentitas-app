@@ -52,7 +52,7 @@ class ServiciosController extends Controller
                     $impagas++;
                     $saldo_total += $factura->monto;
                     array_push($lista_vencimientos,$serv->nombre_servicio.' '.$factura->vencimiento);
-                    $vencimiento_comparacion = new \DateTime($factura->vencimiento);
+                    $vencimiento_comparacion = !is_null($factura->segundo_vencimiento) ? new \DateTime($factura->segundo_vencimiento) : new \DateTime($factura->vencimiento);
                     if ( $vencimiento_comparacion < $hoy ) {
                         array_push($vencidas,$factura);
                     }

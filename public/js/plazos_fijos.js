@@ -20,10 +20,10 @@ function agregarPlazoFijo() {
             method: 'post',
             data: formData,
             success: function(resp){
-                if (resp == '1') {
-                    $('#exito-add-pf').removeClass('hide');
+                if (resp == '1') {                    
+                    M.toast({html: 'Plazo Fijo agregado con éxito! Recargando ...', classes: 'rounded green'});
                     setInterval(() => {
-                        window.location.replace('/cauciones');
+                        window.location.replace('/plazos-fijos');
                     }, 3000);
                 } else {
                     console.log('error');
@@ -55,7 +55,7 @@ function borrarPlazoFijo() {
             data: $('#frm-borrar-pf').serialize(),
             success: function(){
                 if (resp == '1') {
-                    $('#exito-borrar-pf').removeClass('hide');
+                    M.toast({html: 'Borraste el Plazo Fijo :( Recargando ...', classes: 'rounded violet'});
                     setInterval(() => {
                         window.location.replace('/plazos-fijos');
                     }, 2000);

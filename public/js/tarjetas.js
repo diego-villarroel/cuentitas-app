@@ -13,7 +13,7 @@ function agregarResumenTarjeta() {
             data: formData,
             success: function(resp){
                 if (resp == '1') {
-                    $('#exito-add-resumen-tarjeta').removeClass('hide');
+                    M.toast({html: 'Resumen agregado con éxito! Recargando ...', classes: 'rounded green'});
                     setInterval(() => {
                         window.location.replace('/tarjetas');
                     }, 3000);
@@ -47,7 +47,7 @@ function borrarResumen() {
             data: $('#frm-borrar-resumen').serialize(),
             success: function(resp){
                 if (resp == '1') {
-                    $('#exito-borrar-resumen').removeClass('hide');
+                    M.toast({html: 'Borraste el Resumen de una tarjeta :( Recargando ...', classes: 'rounded violet'});
                     setInterval(() => {
                         window.location.replace('/tarjetas');
                     }, 2000);
@@ -82,7 +82,7 @@ function pagarResumen() {
             data: $('#frm-pagar-resumen').serialize(),
             success: function(resp){
                 if (resp == '1') {
-                    M.toast({html: 'Pagado con éxito! Recargando ...', classes: 'rounded green'});
+                    M.toast({html: 'Pagaste el Resumen con éxito! Recargando ...', classes: 'rounded green'});
                     setInterval(() => {
                         window.location.replace('/tarjetas');
                     }, 3000);

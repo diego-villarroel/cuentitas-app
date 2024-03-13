@@ -79,7 +79,7 @@
                 <div class="card blue-grey darken-1">
                     <div class="card-content white-text">
                         <span class="card-title">Tarjetas</span>
-                        <p>Sin pagar este mes</p>
+                        <p>Sin pagar</p>
                         <h5>{{$resumen_tarjetas->impagas}}</h5>
                         <p>Monto actual:</p>
                         <h5>${{$resumen_tarjetas->saldo}}</h5>

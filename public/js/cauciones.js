@@ -21,7 +21,7 @@ function agregarCaucion() {
             data: formData,
             success: function(resp){
                 if (resp == '1') {
-                    $('#exito-add-caucion').removeClass('hide');
+                    M.toast({html: 'Caución agregada con éxito! Recargando ...', classes: 'rounded green'});
                     setInterval(() => {
                         window.location.replace('/cauciones');
                     }, 3000);
@@ -54,6 +54,7 @@ function borrarCaucion() {
             success: function(){
                 if (resp == '1') {
                     $('#exito-borrar-caucion').removeClass('hide');
+                    M.toast({html: 'Borraste la Caución :( Recargando ...', classes: 'rounded violet'});
                     setInterval(() => {
                         window.location.replace('/cauciones');
                     }, 2000);
@@ -63,4 +64,19 @@ function borrarCaucion() {
             }
         })
     })
+}
+
+function detalleCaucion() {
+    $('.detalle-caucion').on('click', function(){
+        let id_caucion = $(this).data('id-caucion');
+        $('#frm-detalle-caucion [name="id_caucion"]').val(id_caucion)
+        $.ajax({
+            method: 'post',
+            url: '/detalle-caucion',
+            data: $('#frm-detalle-caucion').serialize(),
+            success: function(resp) {
+                console.log(resp);
+            }
+        })
+    });
 }
