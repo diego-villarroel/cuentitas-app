@@ -1,11 +1,11 @@
 @include('/generico/header')
     <section class="cuerpo container">
         <div class="row">
-            <div class="col s12 m7">
+            <div class="col s12 m10">
                 <h4>Cartera de Inversiones</h4>
             </div>
-            <div class="col s12 m5 right-align">
-                <button class="btn waves-effect waves-light modal-trigger" data-target="modal_add_inversion">Nueva Inversión</button>
+            <div class="col s12 m2">
+                <button class="btn waves-effect waves-light modal-trigger" data-target="modal_add_inversion">Nueva_Inversión</button>
             </div>
         </div>
         <div class="row">
