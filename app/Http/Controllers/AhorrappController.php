@@ -54,18 +54,21 @@ class AhorrappController extends Controller
         $lista_resumen_tarjetas = (object)[];
         $nombres = [];
         $resumenes = [];
-        foreach ($lista_tarjetas as $tarjetas) {
+        
+        foreach ($lista_tarjetas as $i => $tarjetas) {
             $nombres[$tarjetas->id_tarjeta] = $tarjetas->nombre_tarjeta;
             $resumenes_tarjetas = [];
             foreach ($data_tarjetas->data_completa as $resumen) {
                 if ($resumen->id_tarjeta == $tarjetas->id_tarjeta) {
                     array_push($resumenes_tarjetas,$resumen);
+                    $lista_tarjetas[$i]->pagado = $resumen->pagado;
                 }
             }
             $resumenes[$tarjetas->id_tarjeta] = $resumenes_tarjetas;
         }
         $lista_resumen_tarjetas->nombres_tarjetas = $nombres;
         $lista_resumen_tarjetas->resumenes_tarjetas = $resumenes;
+
         return view('tarjetas',['lista_tarjetas' => $lista_tarjetas,'data_tarjetas' => $data_tarjetas,'lista_personas' => $lista_personas,'lista_resumen_tarjetas' => $lista_resumen_tarjetas]);
     }
 }

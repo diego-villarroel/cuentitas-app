@@ -12,7 +12,7 @@
             @foreach ($lista_tarjetas as $tarjeta)
                 @php $sin_resumen = 1; @endphp
                 <div class="col s12 m4">
-                    <div class="card blue-grey darken-1">
+                    <div class="card @if($tarjeta->pagado == 0) red darken-4 @else blue-grey darken-1 @endif">
                         <div class="card-content white-text">
                             <span class="card-title">@if(count(explode(' ',$tarjeta->nombre_tarjeta)) == 2){{ explode(' ',$tarjeta->nombre_tarjeta)[0] }} <br> {{explode(' ',$tarjeta->nombre_tarjeta)[1]}}@endif</span>
                             @foreach($data_tarjetas->data_completa as $resumen)

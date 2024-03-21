@@ -66,3 +66,29 @@ function borrarPlazoFijo() {
         })
     });
 }
+
+function detallePlazoFijo() {
+    $('.detalle_pf').on('click',function(){
+        let id_pf = $(this).data('id-pf');
+        $('#frm-detalle-pf [name="id_plazo_fijo"]').val(id_pf)
+        $.ajax({
+            url: '/detalle-plazo-fijo',
+            method: 'post',
+            data: $('#frm-detalle-pf').serialize(),
+            success: function(resp){
+                let data = JSON.parse(resp);
+                $('#frm-edicion-pf [name="id_detalle_pf"]').val(data.id_plazo_fijo);
+                $('#frm-edicion-pf [name="ingresado"]').val(data.valor_ingresado);
+                $('#frm-edicion-pf [name="devolver"]').val(data.valor_devolucion);
+                $('#frm-edicion-pf [name="persona"]').val(data.propietario);
+                $('#frm-edicion-pf [name="banco"]').val(data.id_banco);
+                $('#frm-edicion-pf [name="tipo_pf"]').val(data.tipo_plazo_fijo);
+                $('#frm-edicion-pf [name="fecha"]').val(data.fecha_ingresado);
+                $('#frm-edicion-pf [name="dias"]').val(data.cantidad_dias);
+                $('#frm-edicion-pf [name="activo"]').val(data.activo);
+                M.updateTextFields();
+                // $('.select-dropdown').prop('disabled',true);
+            }
+        })
+    });
+}

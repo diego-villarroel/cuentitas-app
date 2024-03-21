@@ -38,6 +38,7 @@ class ServiciosController extends Controller
         $por_vencer = [];
         $lista_vencimientos = [];
         $hoy = new \DateTime;
+        $por_vencer_fecha = $hoy->modify('-1 day');
         $impagas = 0;
         $saldo_total = 0;
 
@@ -55,6 +56,8 @@ class ServiciosController extends Controller
                     $vencimiento_comparacion = !is_null($factura->segundo_vencimiento) ? new \DateTime($factura->segundo_vencimiento) : new \DateTime($factura->vencimiento);
                     if ( $vencimiento_comparacion < $hoy ) {
                         array_push($vencidas,$factura);
+                    } elseif ($vencimiento_comparacion->format('d-m-Y') == $por_vencer_fecha->format('d-m-Y')) {
+                        array_push($por_vencer,$factura);
                     }
                 }
             }

@@ -27,6 +27,7 @@ Route::post('/detalle-caucion','CaucionesController@detalleCaucion');
 Route::get('/plazos-fijos','AhorrappController@plazosFijosVista');
 Route::post('/agregar-plazo-fijo','PlazosFijosController@addPlazoFijo');
 Route::post('/borrar-plazo-fijo','PlazosFijosController@borrarPlazoFijo');
+Route::post('/detalle-plazo-fijo','PlazosFijosController@detallePlazoFijo');
 // INVERSIONES
 Route::get('/inversiones','AhorrappController@inversionesVista');
 // SERVICIOS

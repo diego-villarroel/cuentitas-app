@@ -9,11 +9,13 @@ class TarjetasController extends Controller
 {
     public static function dataResumenTarjetas(){
         $data_resumen = DB::select("SELECT * from resumen_tarjetas ORDER BY id_tarjeta, periodo DESC");
-        $ultimo_periodo = date('m-y');
+        // $ultimo_periodo = date('m-y');
         $hoy = new \DateTime;
+        $por_vencer = $hoy->modify('-1 day');
         $saldo_total = 0;
         $impagas = 0;
         $resumenes_vencidos = [];
+        $resumenes_por_vencer = [];
         foreach ($data_resumen as $resumen) {
             if ($resumen->pagado == 0) {
                 $vencimiento = new \Datetime($resumen->vencimiento);
@@ -21,6 +23,8 @@ class TarjetasController extends Controller
                     array_push($resumenes_vencidos,$resumen);
                     $saldo_total += $resumen->monto;
                     $impagas++;
+                } elseif ( $vencimiento->format('d-m-Y') == $por_vencer->format('d-m-Y') ) {
+                    array_push($resumenes_por_vencer,$resumen);
                 }
             }         
             
@@ -29,6 +33,7 @@ class TarjetasController extends Controller
             'impagas' => $impagas,
             'saldo' => $saldo_total,
             'resumenes_vencidos' => $resumenes_vencidos,
+            'resumenes_por_vencer' => $resumenes_por_vencer,
             'data_completa' => $data_resumen
         );
         $data_resumen = (object)$data_resumen;

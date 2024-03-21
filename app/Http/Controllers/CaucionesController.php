@@ -34,27 +34,31 @@ class CaucionesController extends Controller
                 }
                 if ($mes == $cau->mes) {
                     $ganancia_mensual += $cau->ganancia_neta;
-                    $cauciones_mensuales ++;
                 }
                 if ($periodo == $cau->periodo){
                     array_push($aux,$cau);
                     $ganancia_neta_periodo += $cau->ganancia_neta;
+                    $cauciones_mensuales ++;
                 } else {
                     $aux['total'] = $ganancia_neta_periodo;
+                    $aux['cantidad'] = $cauciones_mensuales;
+                    $aux['ganancia_promedio'] = $ganancia_neta_periodo/$cauciones_mensuales;
                     $data_cauciones_por_periodo[$periodo] = $aux;
                     $periodo = $cau->periodo;
                     $aux = [];
                     $ganancia_neta_periodo = 0;
+                    $cauciones_mensuales = 0;
                 }
             }
             $aux['total'] = $ganancia_neta_periodo;
+            $aux['cantidad'] = $cauciones_mensuales;
+            $aux['ganancia_promedio'] = $ganancia_neta_periodo/$cauciones_mensuales;
             $data_cauciones_por_periodo[$periodo] = $aux;
         }
         // dd($data_cauciones_por_periodo);
         $resumen_cauciones = array(
             'total_cantidad_cauciones' => $cantidad_cauciones,
             'activos' => $activo,
-            'cauciones_mensuales' => $cauciones_mensuales,
             'ganancias_mensuales' => $ganancia_mensual,
             'ganancia_total' => $ganancia_total,
             'data_completa' => $data_cauciones,
@@ -101,7 +105,7 @@ class CaucionesController extends Controller
         if ( !empty($id_caucion) ) {
             $data_caucion = DB::select("SELECT * from cauciones WHERE id_caucion = ".$id_caucion);
 
-            return json_encode($data_caucion);
+            return json_encode($data_caucion[0]);
         }
     }
 }

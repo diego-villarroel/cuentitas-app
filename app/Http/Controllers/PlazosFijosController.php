@@ -83,4 +83,13 @@ class PlazosFijosController extends Controller
             return 0;
         }
     }
+
+    public static function detallePlazoFijo(){
+        $id_pf = Request::input('id_plazo_fijo');
+        if ( !empty($id_pf) ) {
+            $data_pf = DB::select("SELECT * from plazos_fijos WHERE id_plazo_fijo = ".$id_pf);
+
+            return json_encode($data_pf[0]);
+        }
+    }
 }

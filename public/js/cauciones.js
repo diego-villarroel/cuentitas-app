@@ -75,7 +75,16 @@ function detalleCaucion() {
             url: '/detalle-caucion',
             data: $('#frm-detalle-caucion').serialize(),
             success: function(resp) {
-                console.log(resp);
+                let data = JSON.parse(resp);
+                $('#frm-edicion-caucion [name="id_caucion"]').val(data.id_caucion);
+                $('#frm-edicion-caucion [name="ingresado"]').val(data.valor_ingresado);
+                $('#frm-edicion-caucion [name="devolver"]').val(data.valor_devolucion);
+                $('#frm-edicion-caucion [name="persona"]').val(data.propietario);
+                $('#frm-edicion-caucion [name="fecha"]').val(data.creado);
+                $('#frm-edicion-caucion [name="dias"]').val(data.dias);
+                $('#frm-edicion-caucion [name="activo"]').val(data.activo);
+                M.updateTextFields();
+                $('.select-dropdown').prop('disabled',true);
             }
         })
     });

@@ -39,9 +39,17 @@
             @foreach ($resumen_cau->data_cauciones_por_periodo as $k => $periodo)
             <li>
                 <div class="collapsible-header" tabindex="0">
-                    <i class="material-icons">filter_drama</i>Resumen del período {{$k}} - GANANCIAS: ${{$periodo['total']}}
+                    <i class="material-icons dp48">date_range</i>{{$k}} <i class="material-icons dp48">monetization_on</i>${{$periodo['total']}}
                 </div>
-                <div class="collapsible-body" style="">
+                <div class="collapsible-body">
+                    <div class="row center-align data-mes">
+                        <div class="col s12 m6">
+                            Cauciones del mes: {{$periodo['cantidad']}}
+                        </div>
+                        <div class="col s12 m6">
+                            Ganancias promedios: {{$periodo['ganancia_promedio']}}
+                        </div>
+                    </div>
                     <table>
                         <thead>
                             <tr>
@@ -114,9 +122,9 @@
         <input type="hidden" name="id_caucion">
     </form>
     <div id="modal_detalle_caucion" class="modal">
-            <div class="modal-content">
-                <h4>Detalle Caución</h4>
-                @include('/detalles/detalle-caucion')
-            </div>
+        <div class="modal-content">
+            <h4>Detalle Caución</h4>
+            @include('/detalles/detalle-caucion')
         </div>
+    </div>
 @include('/generico/footer')

@@ -91,17 +91,18 @@
             borrarResumen();
         </script>
     @elseif ( $_SERVER['REQUEST_URI'] == '/cauciones' )
-        <script src="/js/cauciones.js"></script>
+        <script src="/js/cauciones.js?v={{rand()}}"></script>
         <script>
             agregarCaucion();
             borrarCaucion();
             detalleCaucion();
         </script>
     @elseif ( $_SERVER['REQUEST_URI'] == '/plazos-fijos' )
-        <script src="/js/plazos_fijos.js"></script>
+        <script src="/js/plazos_fijos.js?v={{rand()}}"></script>
         <script>
             agregarPlazoFijo();
             borrarPlazoFijo();
+            detallePlazoFijo();
         </script>
     @endif
 </html>
