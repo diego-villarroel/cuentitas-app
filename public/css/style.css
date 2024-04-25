@@ -33,8 +33,25 @@ body {
     width: 100%
 }
 
+.menu {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    height: 100px;
+}
+
 .mobile-menu {
     display: none;
+}
+
+.container {
+    width: 80% !important;
+}
+
+.data-mes {
+    border: 1px solid green;
+    border-radius: 30px;
+    padding: 15px 0;
 }
 
 @media (max-width: 900px) {
