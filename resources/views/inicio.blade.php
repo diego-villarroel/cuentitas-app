@@ -5,7 +5,7 @@
         
         @endif
         @if ( !empty($data_facturas->por_vencer) )
-        <div class="row">
+        <!-- <div class="row">
             <div class="col12">
                 <div class="card orange">
                     <div class="card-content white-text">
@@ -14,7 +14,8 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
+            @include('/avisos/por_vencer')
         @endif
         <div class="row">
             <div class="col s12 m4">

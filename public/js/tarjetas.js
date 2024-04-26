@@ -49,10 +49,10 @@ function borrarResumen() {
             data: $('#frm-borrar-resumen').serialize(),
             success: function(resp){
                 if (resp == '1') {
-                    M.toast({html: 'Borraste el Resumen de una tarjeta :( Recargando ...', classes: 'rounded violet'});
+                    M.toast({html: 'Borraste el Resumen de una tarjeta :( Recargando ...', classes: 'rounded'});
                     setInterval(() => {
                         window.location.replace(url_hots+'/tarjetas');
-                    }, 2000);
+                    }, 2500);
                 } else {
                     M.toast({html: 'Ups! Ocurrió un error al borrar resumen. Intenta nuevamente', classes: 'rounded red'});
                 }

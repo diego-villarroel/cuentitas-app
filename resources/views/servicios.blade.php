@@ -61,6 +61,7 @@
                                     <th>Vencimiento</th>
                                     <th>Monto Mora</th>
                                     <th>Segundo Ven.</th>
+                                    <th>De Donde</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -78,8 +79,9 @@
                                     <td>{{$factura->vencimiento}}</td>
                                     <td>$ @if (!empty($factura->monto_mora_string)) {{$factura->monto_mora_string}} @else --- @endif</td>
                                     <td>{{$factura->segundo_vencimiento}}</td>
+                                    <td>@if ($factura->de_casa) <i class="material-icons dp48">home</i> @else <i class="material-icons dp48">favorite</i> @endif </td>
                                     <td>
-                                        <button class="btn waves-effect waves-light modal-trigger tooltipped borrar-resumen" data-tooltip="Borrar"><i class="material-icons dp48">delete_forever</i></button>
+                                        <button class="btn waves-effect waves-light modal-trigger tooltipped borrar-resumen" data-tooltip="Borrar" data-id-factura="{{$factura->id_factura}}" data-servicio="@foreach ($lista_servicios as $serv) @if($serv->id_servicio == $factura->id_servicio) {{$serv->nombre_servicio}} @endif @endforeach" data-monto="{{$factura->monto}}" data-vencimiento="{{$factura->vencimiento}}" data-target="modal_confirm_borrar_factura"><i class="material-icons dp48">delete_forever</i></button>
                                         @if ($factura->pagado == '0')
                                         <button class="btn waves-effect waves-light modal-trigger tooltipped pagar-factura" data-id-factura="{{$factura->id_factura}}" data-servicio="@foreach ($lista_servicios as $serv) @if($serv->id_servicio == $factura->id_servicio) {{$serv->nombre_servicio}} @endif @endforeach" data-monto="{{$factura->monto}}" data-vencimiento="{{$factura->vencimiento}}" data-target="modal_confirm_pagar_factura" data-tooltip="Pagar"><i class="material-icons dp48">monetization_on</i></button>
                                         @endif
@@ -110,14 +112,16 @@
                 </div>
             </div>
 
-            <div id="exito-pagar-factura" class="col s12 hide">
-                <div class="card">
-                    <div class="card-content">
-                        <span class="card-title center-align">Pagado con éxito! Recargando</span>
-                        <div class="progress" style="margin-top:20px;margin-bottom:20px">
-                            <div class="indeterminate"></div>
-                        </div>
-                    </div>
+            
+        </div>
+    </div>
+    <div id="modal_confirm_borrar_factura" class="modal">
+        <div class="modal-content">
+            <h4>Pagar Factura</h4>
+            <p>Estas a punto de borrar la factura de <span id="servicio_borrar"></span> que tiene un valor de $<span id="valor_servicio_borrar"></span> y vence el <span id="vencimiento_servicio_borrar"></span>.</p>
+            <div class="row">
+                <div class="col s12 center-align">
+                    <button class="btn red waves-effect waves-light" id="confirm_borrar_factura_servicio">Borrar</button>
                 </div>
             </div>
         </div>

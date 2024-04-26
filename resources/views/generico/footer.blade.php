@@ -78,14 +78,15 @@
             agregarPlazoFijo();
         </script>
     @elseif ( $_SERVER['REQUEST_URI'] == env('URL_HOST').'/servicios' )
-        <script src="{{env('URL_HOST')}}/js/servicios.js"></script>
+        <script src="{{env('URL_HOST')}}/js/servicios.js?v={{rand()}}"></script>
         <script>
             agregarFactura();
             addServicio();
             pagarFactura();
+            borrarFactura();
         </script>
     @elseif ( $_SERVER['REQUEST_URI'] == env('URL_HOST').'/tarjetas' )
-        <script src="{{env('URL_HOST')}}/js/tarjetas.js"></script>
+        <script src="{{env('URL_HOST')}}/js/tarjetas.jsv={{rand()}}"></script>
         <script>
             agregarResumenTarjeta();
             pagarResumen();
