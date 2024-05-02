@@ -56,7 +56,7 @@ class AhorrappController extends Controller
         $lista_resumen_tarjetas = (object)[];
         $nombres = [];
         $resumenes = [];
-        
+        // dd($data_tarjetas);
         foreach ($lista_tarjetas as $i => $tarjetas) {
             $nombres[$tarjetas->id_tarjeta] = $tarjetas->nombre_tarjeta;
             $resumenes_tarjetas = [];

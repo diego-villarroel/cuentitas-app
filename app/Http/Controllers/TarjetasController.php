@@ -64,38 +64,43 @@ class TarjetasController extends Controller
         $vencimiento = Request::input('vencimiento');
         $corte = Request::input('corte');
         $monto = Request::input('valor');
-        $periodo = new \Datetime($corte);
-        $periodo = $periodo->format('m-y');
-        $data_resumen = DB::select("SELECT * from resumen_tarjetas WHERE id_tarjeta = ".$tarjeta." ORDER BY periodo DESC");
-        $existe = 0;
-        foreach ($data_resumen as $resumen) {
-            if ($resumen->id_tarjeta == $tarjeta && $resumen->periodo == $periodo) {
-                $existe = 1;
-                break;
+        if (!is_null($tarjeta) && !is_null($vencimiento) && !is_null($corte) && !is_null($monto)) {
+            $periodo = new \Datetime($corte);
+            $periodo = $periodo->format('m-y');
+            $data_resumen = DB::select("SELECT * from resumen_tarjetas WHERE id_tarjeta = ".$tarjeta." ORDER BY periodo DESC");
+            $existe = 0;
+            foreach ($data_resumen as $resumen) {
+                if ($resumen->id_tarjeta == $tarjeta && $resumen->periodo == $periodo) {
+                    $existe = 1;
+                    break;
+                }
             }
-        }
-        if ( !$existe ) {
-            $monto_string = explode('.',strval($monto))[0];
-            if (strlen($monto_string) > 3 && strlen($monto_string ) < 7) {
-                $miles = strlen($monto_string) - 3;
-                $monto_string = substr($monto_string, 0, $miles).'.'.substr($monto_string, -3);
+            if ( !$existe ) {
+                $monto_string = explode('.',strval($monto))[0];
+                if (strlen($monto_string) > 3 && strlen($monto_string ) < 7) {
+                    $miles = strlen($monto_string) - 3;
+                    $monto_string = substr($monto_string, 0, $miles).'.'.substr($monto_string, -3);
+                }
+                if (strlen($monto_string) > 7 && strlen($monto_string) < 9) {
+                    $millones = strlen($monto_string) - 6;
+                    $monto_string = substr($monto_string, 0, $millones).'.'.substr($monto_string, -6, -4).'.'.substr($monto_string, -3);
+                }
+                if (isset(explode('.',strval($monto))[1])) {
+                    $monto_string .= ','.explode('.',strval($monto))[1];
+                }
+                // 
+                $meses_del_año = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
+                $mes = substr($periodo, 1, 2);
+                $mes = $meses_del_año[intval($mes)];
+                // Insert en DDBB
+                $temp = DB::insert("INSERT into resumen_tarjetas (vencimiento,corte,monto,id_tarjeta,periodo,monto_string,mes_string) VALUES('".$vencimiento."','".$corte."',".$monto.",".$tarjeta.",'".$periodo."','".$monto_string."','".$mes."')");
+                return 1;
+            } else {
+                return 0;
             }
-            if (strlen($monto_string) > 7 && strlen($monto_string) < 9) {
-                $millones = strlen($monto_string) - 6;
-                $monto_string = substr($monto_string, 0, $millones).'.'.substr($monto_string, -6, -4).'.'.substr($monto_string, -3);
-            }
-            if (isset(explode('.',strval($monto))[1])) {
-                $monto_string .= ','.explode('.',strval($monto))[1];
-            }
-            // 
-            $meses_del_año = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
-            $mes = substr($periodo, 1, 2);
-            $mes = $meses_del_año[intval($mes)];
-            // Insert en DDBB
-            $temp = DB::insert("INSERT into resumen_tarjetas (vencimiento,corte,monto,id_tarjeta,periodo,monto_string,mes_string) VALUES('".$vencimiento."','".$corte."',".$monto.",".$tarjeta.",'".$periodo.",".$monto_string.",'".$mes."')");
-            return 1;
+
         } else {
-            return 0;
+            return 2;
         }
     }
 
@@ -112,10 +117,19 @@ class TarjetasController extends Controller
     public static function pagarResumenTarjeta(){
         $id_pf = Request::input('id_resumen');
         if ( !empty($id_pf) ) {
-            $temp = DB::delete("UPDATE resumen_tarjetas SET pagado = 1 WHERE id_resumen_tarjeta = ".$id_pf);
+            $temp = DB::delete("UPDATE resumen_tarjetas SET pagado = 1, activo = 0 WHERE id_resumen_tarjeta = ".$id_pf);
             return 1;
         } else {
             return 0;
+        }
+    }
+
+    public static function detalleResumenTarjeta(){
+        $id_resumen = Request::input('id_resumen');
+        if (!empty($id_resumen)) {
+            $detalle_resumen = DB::select('SELECT tr.vencimiento, tr.corte, tr.pagado, tr.monto_string, tr.mes_string, t.nombre_tarjeta, p.nombre, p.apellido, b.nombre AS nombre_banco FROM resumen_tarjetas AS tr INNER JOIN tarjetas AS t ON tr.id_tarjeta = t.id_tarjeta INNER JOIN pollitos AS p ON t.id_persona = p.id_pollito INNER JOIN bancos AS b ON t.id_banco = b.id_bancos');
+
+            return $detalle_resumen[0];
         }
     }
 }

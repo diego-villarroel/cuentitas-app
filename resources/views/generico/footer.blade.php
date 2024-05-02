@@ -67,10 +67,10 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <!-- JS POR SECCIONES -->
     @if ( $_SERVER['REQUEST_URI'] == env('URL_HOST').'/' )
-        <script src="{{env('URL_HOST')}}/js/servicios.js"></script>
-        <script src="{{env('URL_HOST')}}/js/tarjetas.js"></script>
-        <script src="{{env('URL_HOST')}}/js/cauciones.js"></script>
-        <script src="{{env('URL_HOST')}}/js/plazos_fijos.js"></script>
+        <script src="{{env('URL_HOST')}}/js/servicios.js?v={{rand()}}"></script>
+        <script src="{{env('URL_HOST')}}/js/tarjetas.js?v={{rand()}}"></script>
+        <script src="{{env('URL_HOST')}}/js/cauciones.js?v={{rand()}}"></script>
+        <script src="{{env('URL_HOST')}}/js/plazos_fijos.js?v={{rand()}}"></script>
         <script>
             agregarFactura();
             agregarResumenTarjeta();
@@ -86,11 +86,12 @@
             borrarFactura();
         </script>
     @elseif ( $_SERVER['REQUEST_URI'] == env('URL_HOST').'/tarjetas' )
-        <script src="{{env('URL_HOST')}}/js/tarjetas.jsv={{rand()}}"></script>
+        <script src="{{env('URL_HOST')}}/js/tarjetas.js?v={{rand()}}"></script>
         <script>
             agregarResumenTarjeta();
             pagarResumen();
             borrarResumen();
+            detalleResumen();
         </script>
     @elseif ( $_SERVER['REQUEST_URI'] == env('URL_HOST').'/cauciones' )
         <script src="{{env('URL_HOST')}}/js/cauciones.js?v={{rand()}}"></script>

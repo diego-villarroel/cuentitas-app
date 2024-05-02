@@ -25,7 +25,14 @@
             </div>
             <div class="col m2"></div>
             <div class="col s12 m5">
-                <div class="card blue-grey darken-1">
+                @if ( !empty($data_facturas->vencidas) )
+                    @include ('/avisos/urgente')
+                
+                @endif
+                @if ( !empty($data_facturas->por_vencer) )
+                    @include('/avisos/por_vencer')
+                @endif
+                {{--<div class="card blue-grey darken-1">
                     <div class="card-content white-text">
                         <span class="card-title">Vencimientos</span>
                         @foreach ($lista_servicios as $serv)
@@ -40,7 +47,7 @@
                             @endif
                         @endforeach
                     </div>
-                </div>
+                </div>--}}
             </div>
         </div>
         <hr>

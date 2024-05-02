@@ -18,10 +18,19 @@ function agregarResumenTarjeta() {
                     setInterval(() => {
                         window.location.replace(url_hots+'/tarjetas');
                     }, 3000);
+                } else if (resp == '2') {
+                    M.toast({html: 'Ups! Revisá bien los datos enviados e intentá nuevamente', classes: 'rounded orange'});
                 } else {
                     M.toast({html: 'Ups! Ocurrió un error al agregar resumen. Intenta nuevamente', classes: 'rounded red'});
                 }
-            }
+            },
+            error: function(resp){
+                if (resp.status == 500) {
+                    M.toast({html: 'Ups! Revisá bien los datos enviados e intentá nuevamente', classes: 'rounded orange'});
+                } else {
+                    M.toast({html: 'Ups! Ocurrió un error al agregar resumen. Intenta nuevamente', classes: 'rounded red'});
+                }
+            },
         })
     });
 }
@@ -38,7 +47,7 @@ function borrarResumen() {
         $('#monto_resumen').text(monto);
         $('#tarjeta_resumen').text(tarjeta)
         $('#vencimiento_resumen').text(vencimiento);
-        $('#frm-borrar-resumen [name="id_resumen"]').val(resumen_select);
+        $('#frm-accion-resumen [name="id_resumen"]').val(resumen_select);
         
     });
     
@@ -46,7 +55,7 @@ function borrarResumen() {
         $.ajax({
             url: url_hots+'/borrar-resumen-tarjeta',
             method: 'post',
-            data: $('#frm-borrar-resumen').serialize(),
+            data: $('#frm-accion-resumen').serialize(),
             success: function(resp){
                 if (resp == '1') {
                     M.toast({html: 'Borraste el Resumen de una tarjeta :( Recargando ...', classes: 'rounded'});
@@ -73,7 +82,7 @@ function pagarResumen() {
         $('#monto_resumen_pagar').text(monto);
         $('#tarjeta_resumen_pagar').text(tarjeta)
         $('#vencimiento_resumen_pagar').text(vencimiento);
-        $('#frm-pagar-resumen [name="id_resumen"]').val(resumen_select);
+        $('#frm-accion-resumen [name="id_resumen"]').val(resumen_select);
         
     });
     
@@ -81,7 +90,7 @@ function pagarResumen() {
         $.ajax({
             url: url_hots+'/pagar-resumen-tarjeta',
             method: 'post',
-            data: $('#frm-pagar-resumen').serialize(),
+            data: $('#frm-accion-resumen').serialize(),
             success: function(resp){
                 if (resp == '1') {
                     M.toast({html: 'Pagaste el Resumen con éxito! Recargando ...', classes: 'rounded green'});
@@ -94,4 +103,37 @@ function pagarResumen() {
             }
         })
     });
+}
+
+function detalleResumen() {
+    let url_hots = $('#url_host').val();
+    $('.detalle-resumen').on('click',function(){
+        $('#frm-accion-resumen [name="id_resumen"]').val($(this).data('id-resumen'))
+        $.ajax({
+            method:'post',
+            url: url_hots+'/detalle-resumen-tarjeta',
+            data: $('#frm-accion-resumen').serialize(),
+            success: function(resp){
+                console.log(resp);
+                if (resp != '0') {
+                    $('#gasto_resumen').html(resp.monto_string);
+                    $('#mes_resumen').html(resp.mes_string);
+                    $('#tarjeta_resumen_detalle').html(resp.nombre_tarjeta);
+                    let pagado = ';'
+                    if (resp.pagado == 1) {
+                        pagado = '<i class="material-icons dp48 tooltipped" data-tooltip="Pagado">check</i>';
+                    } else {
+                        pagado = '<i class="material-icons dp48 tooltipped" data-tooltip="Impago">money_off</i>';
+                    }
+                    $('#pagado_resumen').html(pagado);
+                    $('#vencimiento_resumen_detalle').html(resp.vencimiento);
+                    $('#corte_resumen').html(resp.corte);
+                    $('#pollito_resumen').html(resp.nombre+' '+resp.apellido);
+                    $('#banco_resumen').html(resp.nombre_banco)
+                } else {
+                    M.toast({html: 'Ups! Ocurrió un error al cargar detalles. Intenta nuevamente', classes: 'rounded red'});                    
+                }
+            }
+        })
+    })
 }

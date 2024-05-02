@@ -5,16 +5,6 @@
         
         @endif
         @if ( !empty($data_facturas->por_vencer) )
-        <!-- <div class="row">
-            <div class="col12">
-                <div class="card orange">
-                    <div class="card-content white-text">
-                        <span class="card-title">VENCEN MAÑANA, OJOTA</span>
-                        <p>Activos</p>
-                    </div>
-                </div>
-            </div>
-        </div> -->
             @include('/avisos/por_vencer')
         @endif
         <div class="row">

@@ -83,7 +83,7 @@
                                         </td>
                                         <td>${{$resumen->vencimiento}}</td>
                                         <td>
-                                            <button class="btn wave-effect waves-light tooltipped" data-tooltip="Editar"><i class="material-icons dp48">remove_red_eye</i></button>
+                                            <button class="btn wave-effect waves-light tooltipped modal-trigger detalle-resumen" data-tooltip="Editar" data-target="modal_detalle_tarjeta" data-id-resumen="{{$resumen->id_resumen_tarjeta}}"><i class="material-icons dp48">remove_red_eye</i></button>
                                             <button class="btn waves-effect waves-light modal-trigger tooltipped borrar-resumen" data-target="modal_confirm_borrar_resumen" data-id-resumen="{{$resumen->id_resumen_tarjeta}}" data-periodo="{{$resumen->periodo}}" data-monto="{{$resumen->monto}}" data-vencimiento="{{$resumen->vencimiento}}" data-tarjeta="@foreach ($lista_tarjetas as $tarjeta) @if($tarjeta->id_tarjeta == $resumen->id_tarjeta) {{$tarjeta->nombre_tarjeta}} @endif @endforeach" data-tooltip="Borrar"><i class="material-icons dp48">delete_forever</i></button>
                                             @if ($resumen->pagado == '0')
                                             <button class="btn waves-effect waves-light modal-trigger tooltipped pagar-resumen" data-id-resumen="{{$resumen->id_resumen_tarjeta}}" data-target="modal_confirm_pagar_resumen"  data-periodo="{{$resumen->periodo}}" data-monto="{{$resumen->monto}}" data-vencimiento="{{$resumen->vencimiento}}" data-tarjeta="@foreach ($lista_tarjetas as $tarjeta) @if($tarjeta->id_tarjeta == $resumen->id_tarjeta) {{$tarjeta->nombre_tarjeta}} @endif @endforeach" data-tooltip="Pagar"><i class="material-icons dp48">monetization_on</i></button>
@@ -100,11 +100,7 @@
         </ul>
         @endif
     </section>
-    <form id="frm-borrar-resumen">
-        {{ csrf_field() }}
-        <input type="hidden" name="id_resumen">
-    </form>
-    <form id="frm-pagar-resumen">
+    <form id="frm-accion-resumen">
         {{ csrf_field() }}
         <input type="hidden" name="id_resumen">
     </form>
@@ -148,6 +144,12 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div id="modal_detalle_tarjeta" class="modal">
+        <div class="modal-content">
+            <h4>Detalle Plazo Fijo</h4>
+            @include('/detalles/detalle-tarjeta')
         </div>
     </div>
 @include('/generico/footer')

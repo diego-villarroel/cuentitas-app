@@ -42,6 +42,7 @@ Route::get('/tarjetas','AhorrappController@tarjetasVista')->middleware('login');
 Route::post('/agregar-resumen-tarjeta','TarjetasController@addResumenTarjeta')->middleware('login');
 Route::post('/borrar-resumen-tarjeta','TarjetasController@borrarResumenTarjeta')->middleware('login');
 Route::post('/pagar-resumen-tarjeta','TarjetasController@pagarResumenTarjeta')->middleware('login');
+Route::post('/detalle-resumen-tarjeta','TarjetasController@detalleResumenTarjeta')->middleware('login');
 // USUARIOS
 Route::get('/login','PollitosController@loginVista');
 Route::post('/logearse','PollitosController@logearse');
