@@ -17,8 +17,6 @@
             @endforeach
         </select>
         <label>Propietario</label>
-        <!-- <input id="persona" name="persona" type="text" class="validate">
-        <label for="persona">Propietario</label> -->
     </div>
     <div class="input-field col s12 m6">
         <select id="banco" name="banco">
@@ -57,16 +55,6 @@
         </div>
     </div>
     <div class="col s12 right-align">
-        <button type="submit" class="waves-effect waves-light btn">Agregar</button>
+        <button type="submit" class="waves-effect waves-light purple darken-4 btn">Agregar</button>
     </div>
 </form>
-<div id="exito-add-pf" class="col s12 hide">
-    <div class="card">
-        <div class="card-content">
-            <span class="card-title center-align">Plazo Fijo agregado con éxito! Recargando</span>
-            <div class="progress" style="margin-top:20px;margin-bottom:20px">
-                <div class="indeterminate"></div>
-            </div>
-        </div>
-    </div>
-</div>

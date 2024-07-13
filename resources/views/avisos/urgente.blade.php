@@ -9,11 +9,17 @@
                     <h6>SERVICIOS</h6>
                         @foreach ($data_facturas->vencidas as $factura)
                             <div class="col6">
-                                <h6>@foreach ($lista_servicios as $serv) @if ($serv->id_servicio == $factura->id_servicio) {{$serv->nombre_servicio}} @endif @endforeach</h6>
+                                <div>@foreach ($lista_servicios as $serv) @if ($serv->id_servicio == $factura->id_servicio) {{$serv->nombre_servicio}} @endif @endforeach</div>
                             </div>
+                            @if($_SERVER['REQUEST_URI'] != env('URL_HOST').'/servicios') 
                             <div class="col6">
-                                <a href="/servicios" class="btn">FECHA: {{$factura->vencimiento}} - ${{$factura->monto}}</a>
+                                <a href="{{env('URL_HOST')}}/servicios" class="btn">FECHA: {{$factura->vencimiento}} - ${{$factura->monto}}</a>
                             </div>
+                            @else                             
+                            <div class="col6">
+                                <small>{{$factura->vencimiento}} - $ {{$factura->monto}}</small>
+                            </div>
+                            @endif
                         @endforeach
                     @endif
                     </div>
@@ -24,9 +30,11 @@
                                 <div class="col6">
                                     <h6>@foreach ($lista_tarjetas as $tarjeta) @if ($tarjeta->id_tarjeta == $resumen->id_tarjeta) {{$tarjeta->nombre_tarjeta}} @endif @endforeach</h6>
                                 </div>
+                                @if($_SERVER['REQUEST_URI'] != env('URL_HOST').'/tarjetas') 
                                 <div class="col6">
-                                    <a href="/tarjetas" class="btn">FECHA: {{$resumen->vencimiento}} - ${{$resumen->monto}}</a>
+                                    <a href="{{env('URL_HOST')}}/tarjetas" class="btn">FECHA: {{$resumen->vencimiento}} - ${{$resumen->monto}}</a>
                                 </div>
+                                @endif
                             @endforeach
                         @endif
                     </div>

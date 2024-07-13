@@ -22,16 +22,6 @@
         <label for="corte">Corte</label>
     </div>
     <div class="col s12 right-align">
-        <button type="submit" class="waves-effect waves-light btn">Agregar</button>
+        <button type="submit" class="waves-effect waves-light purple darken-4 btn">Agregar</button>
     </div>
 </form>
-<div id="exito-add-resumen-tarjeta" class="col s12 hide">
-    <div class="card">
-        <div class="card-content">
-            <span class="card-title center-align">Resumen de Tarjeta agregado con éxito! Recargando</span>
-            <div class="progress" style="margin-top:20px;margin-bottom:20px">
-                <div class="indeterminate"></div>
-            </div>
-        </div>
-    </div>
-</div>

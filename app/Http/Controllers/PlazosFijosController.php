@@ -32,7 +32,6 @@ class PlazosFijosController extends Controller
                         $activo_uva++;
                     }
                 }
-                
             }
         }
         $resumen_plazos_fijos = array(
@@ -66,8 +65,14 @@ class PlazosFijosController extends Controller
             $neta = $devolver - $ingresado;
             $porcentaje = ($neta*100)/$ingresado;
             $porcentaje_anual = ($porcentaje*30*12)/$dias;
+            // Parseo de variables a string para mostrar
+            $ganancia_neta_string = HelperController::parsearValor($neta,'$');
+            $valor_ingresado_string = HelperController::parsearValor($ingresado,'$');
+            $valor_devolucion_string = HelperController::parsearValor($devolver,'$');
+            $porcentaje_ganancia_string = HelperController::parsearValor($porcentaje,'%');
+            $porcentaje_anual_ganancia_string = HelperController::parsearValor($porcentaje_anual,'%');
             // Insert en DDBB
-            $temp = DB::insert("INSERT into plazos_fijos (valor_ingresado,fecha_ingresado,fecha_devolucion,cantidad_dias,valor_devolucion,tipo_plazo_fijo,activo,propietario,id_banco,ganancia_neta,porcentaje_ganancia,porcentaje_ganancia_anual) VALUES(".$ingresado.",'".$fecha."','".$fecha_devolucion."',".$dias.",".$devolver.",'".$tipo_pf."',".$activo.",'".$persona."',".$banco.",".$neta.",".$porcentaje.",".$porcentaje_anual.")");
+            $temp = DB::insert("INSERT into plazos_fijos (valor_ingresado,fecha_ingresado,fecha_devolucion,cantidad_dias,valor_devolucion,tipo_plazo_fijo,activo,propietario,id_banco,ganancia_neta,porcentaje_ganancia,porcentaje_ganancia_anual,ganancia_neta_string,porcentaje_ganancia_string,porcentaje_ganancia_anual_string,ingresado_string,devolucion_string) VALUES(".$ingresado.",'".$fecha."','".$fecha_devolucion."',".$dias.",".$devolver.",'".$tipo_pf."',".$activo.",'".$persona."',".$banco.",".$neta.",".$porcentaje.",".$porcentaje_anual.",'".$ganancia_neta_string."','".$porcentaje_ganancia_string."','".$porcentaje_anual_ganancia_string."','".$valor_ingresado_string."','".$valor_devolucion_string."')");
             return 1;
         } else {
             return 0;
@@ -77,7 +82,7 @@ class PlazosFijosController extends Controller
     public static function borrarPlazoFijo(){
         $id_pf = Request::input('id_plazo_fijo');
         if ( !empty($id_pf) ) {
-            $temp = DB::delete("DELETE FROM cauciones WHERE id_plazo_fijo = ".$id_pf);
+            $temp = DB::delete("DELETE FROM plazos_fijos WHERE id_plazo_fijo = ".$id_pf);
             return 1;
         } else {
             return 0;
@@ -87,7 +92,7 @@ class PlazosFijosController extends Controller
     public static function detallePlazoFijo(){
         $id_pf = Request::input('id_plazo_fijo');
         if ( !empty($id_pf) ) {
-            $data_pf = DB::select("SELECT * from plazos_fijos WHERE id_plazo_fijo = ".$id_pf);
+            $data_pf = DB::select("SELECT pf.ingresado_string, pf.devolucion_string, pf.porcentaje_ganancia_anual_string, pf.porcentaje_ganancia_string, pf.ganancia_neta_string, pf.fecha_ingresado, pf.fecha_devolucion, pf.cantidad_dias, b.nombre AS nombre_banco, tipopf.nombre_tipo_pf, pollitos.nombre as nombre_p, pollitos.apellido as apellido_p from plazos_fijos AS pf INNER JOIN bancos as b ON pf.id_banco = b.id_bancos INNER JOIN tipo_plazo_fijo as tipopf ON pf.tipo_plazo_fijo = tipopf.id_tipo_pf INNER JOIN pollitos ON pf.propietario = pollitos.id_pollito WHERE pf.id_plazo_fijo = ".$id_pf);
 
             return json_encode($data_pf[0]);
         }

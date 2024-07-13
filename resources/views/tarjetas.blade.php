@@ -5,14 +5,14 @@
                 <h4>Tarjetas</h4>
             </div>
             <div class="col s12 m5 right-align">
-                <button class="btn waves-effect waves-light modal-trigger" data-target="modal_add_resumen_tarjeta">Nuevo Resumen Tarjeta</button>
+                <button class="btn red darken-4 waves-effect waves-light modal-trigger" data-target="modal_add_resumen_tarjeta">Nuevo Resumen Tarjeta</button>
             </div>
         </div>
         <div class="row">
             @foreach ($lista_tarjetas as $tarjeta)
                 @php $sin_resumen = 1; @endphp
                 <div class="col s12 m4">
-                    <div class="card @if($tarjeta->pagado == 0) red darken-4 @else blue-grey darken-1 @endif">
+                    <div class="card @if(isset($tarjeta->pagado) && $tarjeta->pagado == 0) red darken-4 @else purple darken-4 @endif">
                         <div class="card-content white-text">
                             <span class="card-title">@if(count(explode(' ',$tarjeta->nombre_tarjeta)) == 2){{ explode(' ',$tarjeta->nombre_tarjeta)[0] }} <br> {{explode(' ',$tarjeta->nombre_tarjeta)[1]}}@endif</span>
                             @foreach($data_tarjetas->data_completa as $resumen)
@@ -21,9 +21,9 @@
                                     <p>Estado del mes</p>
                                     <h5>
                                         @if ($resumen->pagado == 1) 
-                                            <i class="material-icons dp48">check</i>
+                                            <i class="material-icons dp48 tooltipped green-text" data-tooltip="Pagado">attach_money</i>
                                         @else 
-                                            <i class="material-icons dp48">money_off</i>
+                                            <i class="material-icons dp48 tooltipped" data-tooltip="Impago">money_off</i>
                                         @endif
                                     </h5>
                                     <p>Monto:</p>
@@ -75,18 +75,18 @@
                                         <td>{{$resumen->periodo}}</td>
                                         <td>${{$resumen->monto}}</td>
                                         <td>
-                                            @if ($resumen->pagado == 1) 
-                                                <i class="material-icons dp48 tooltipped" data-tooltip="Pagado">check</i>
+                                            @if (isset($resumen->pagado) && $resumen->pagado == 1)
+                                                <i class="material-icons dp48 tooltipped green-text" data-tooltip="Pagado">attach_money</i>
                                             @else 
-                                                <i class="material-icons dp48 tooltipped" data-tooltip="Impago">money_off</i>
+                                                <i class="material-icons dp48 tooltipped red-text" data-tooltip="Impago">money_off</i>
                                             @endif
                                         </td>
                                         <td>${{$resumen->vencimiento}}</td>
                                         <td>
-                                            <button class="btn wave-effect waves-light tooltipped" data-tooltip="Editar"><i class="material-icons dp48">edit</i></button>
-                                            <button class="btn waves-effect waves-light modal-trigger tooltipped borrar-resumen" data-target="modal_confirm_borrar_resumen" data-id-resumen="{{$resumen->id_resumen_tarjeta}}" data-periodo="{{$resumen->periodo}}" data-monto="{{$resumen->monto}}" data-vencimiento="{{$resumen->vencimiento}}" data-tarjeta="@foreach ($lista_tarjetas as $tarjeta) @if($tarjeta->id_tarjeta == $resumen->id_tarjeta) {{$tarjeta->nombre_tarjeta}} @endif @endforeach" data-tooltip="Borrar"><i class="material-icons dp48">delete_forever</i></button>
+                                            <button class="btn purple lighten-2 wave-effect waves-light tooltipped modal-trigger detalle-resumen" data-tooltip="Editar" data-target="modal_detalle_tarjeta" data-id-resumen="{{$resumen->id_resumen_tarjeta}}"><i class="material-icons dp48">remove_red_eye</i></button>
+                                            <button class="btn red darken-4 waves-effect waves-light modal-trigger tooltipped borrar-resumen" data-target="modal_confirm_borrar_resumen" data-id-resumen="{{$resumen->id_resumen_tarjeta}}" data-periodo="{{$resumen->periodo}}" data-monto="{{$resumen->monto}}" data-vencimiento="{{$resumen->vencimiento}}" data-tarjeta="@foreach ($lista_tarjetas as $tarjeta) @if($tarjeta->id_tarjeta == $resumen->id_tarjeta) {{$tarjeta->nombre_tarjeta}} @endif @endforeach" data-tooltip="Borrar"><i class="material-icons dp48">delete_forever</i></button>
                                             @if ($resumen->pagado == '0')
-                                            <button class="btn waves-effect waves-light modal-trigger tooltipped pagar-resumen" data-id-resumen="{{$resumen->id_resumen_tarjeta}}" data-target="modal_confirm_pagar_resumen"  data-periodo="{{$resumen->periodo}}" data-monto="{{$resumen->monto}}" data-vencimiento="{{$resumen->vencimiento}}" data-tarjeta="@foreach ($lista_tarjetas as $tarjeta) @if($tarjeta->id_tarjeta == $resumen->id_tarjeta) {{$tarjeta->nombre_tarjeta}} @endif @endforeach" data-tooltip="Pagar"><i class="material-icons dp48">monetization_on</i></button>
+                                            <button class="btn light-green darken-4 waves-effect waves-light modal-trigger tooltipped pagar-resumen" data-id-resumen="{{$resumen->id_resumen_tarjeta}}" data-target="modal_confirm_pagar_resumen"  data-periodo="{{$resumen->periodo}}" data-monto="{{$resumen->monto}}" data-vencimiento="{{$resumen->vencimiento}}" data-tarjeta="@foreach ($lista_tarjetas as $tarjeta) @if($tarjeta->id_tarjeta == $resumen->id_tarjeta) {{$tarjeta->nombre_tarjeta}} @endif @endforeach" data-tooltip="Pagar"><i class="material-icons dp48">monetization_on</i></button>
                                             @endif
                                         </td>
                                     </tr>
@@ -100,11 +100,7 @@
         </ul>
         @endif
     </section>
-    <form id="frm-borrar-resumen">
-        {{ csrf_field() }}
-        <input type="hidden" name="id_resumen">
-    </form>
-    <form id="frm-pagar-resumen">
+    <form id="frm-accion-resumen">
         {{ csrf_field() }}
         <input type="hidden" name="id_resumen">
     </form>
@@ -115,16 +111,6 @@
             <div class="row">
                 <div class="col s12 center-align">
                     <button class="btn red waves-effect waves-light" id="confirm_borrar_resumen">Borrar</button>
-                </div>
-            </div>
-            <div id="exito-borrar-resumen" class="col s12 hide">
-                <div class="card">
-                    <div class="card-content">
-                        <span class="card-title center-align">Borraste el Resumen de Tarjeta seleccionado... Recargando</span>
-                        <div class="progress" style="margin-top:20px;margin-bottom:20px">
-                            <div class="indeterminate"></div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -138,16 +124,12 @@
                     <button class="btn green waves-effect waves-light" id="confirm_pagar_resumen">Pagar</button>
                 </div>
             </div>
-            <div id="exito-pagar-resumen" class="col s12 hide">
-                <div class="card">
-                    <div class="card-content">
-                        <span class="card-title center-align">Pagado con éxito! Recargando</span>
-                        <div class="progress" style="margin-top:20px;margin-bottom:20px">
-                            <div class="indeterminate"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        </div>
+    </div>
+    <div id="modal_detalle_tarjeta" class="modal">
+        <div class="modal-content">
+            <h4>Detalle Plazo Fijo</h4>
+            @include('/detalles/detalle-tarjeta')
         </div>
     </div>
 @include('/generico/footer')

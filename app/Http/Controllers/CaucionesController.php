@@ -9,12 +9,13 @@ class CaucionesController extends Controller
 {
     public static function dataResumenCauciones(){
         $data_cauciones = DB::select("SELECT * from cauciones ORDER BY creado DESC");
+        $activo = 0;
+        $cantidad_cauciones = 0;
+        $ganancia_mensual = 0;
+        $ganancia_total = 0;
+        $data_cauciones_por_periodo = [];
         if (!empty($data_cauciones)) {
-            $activo = 0;
             $cauciones_mensuales = 0;
-            $ganancia_total = 0;
-            $ganancia_mensual = 0;
-            $cantidad_cauciones = 0;
             $mes = date('m');
             $hoy = new \Datetime();
             $data_cauciones_por_periodo = [];
@@ -55,7 +56,6 @@ class CaucionesController extends Controller
             $aux['ganancia_promedio'] = $ganancia_neta_periodo/$cauciones_mensuales;
             $data_cauciones_por_periodo[$periodo] = $aux;
         }
-        // dd($data_cauciones_por_periodo);
         $resumen_cauciones = array(
             'total_cantidad_cauciones' => $cantidad_cauciones,
             'activos' => $activo,
@@ -82,7 +82,17 @@ class CaucionesController extends Controller
             $mes = explode('-',$fecha)[1];
             $periodo = new \DateTime($fecha);
             $periodo = $periodo->format('m-y');
-            $temp = DB::insert("INSERT into cauciones (valor_ingresado,valor_devolucion,propietario,creado,dias,activo,ganancia_neta,porcentaje_ganancia,porcentaje_anual_ganancia,mes,periodo) VALUES(".$ingresado.",".$devolver.",'".$persona."','".$fecha."',".$dias.",".$activo.",".$ganancia.",".$porcentaje.",".$porcentaje_anual.",".$mes.",'".$periodo."')");
+            // 
+            $ganancia_neta_string = HelperController::parsearValor($ganancia,'$');
+            $valor_ingresado_string = HelperController::parsearValor($ingresado,'$');
+            $valor_devolucion_string = HelperController::parsearValor($devolver,'$');
+            $porcentaje_ganancia_string = HelperController::parsearValor($porcentaje,'%');
+            $porcentaje_anual_ganancia_string = HelperController::parsearValor($porcentaje_anual,'%');
+            // 
+            $meses_del_año = ['ENERO','FEBRERO','MARZO','ABRIL','MAYO','JUNIO','JULIO','AGOSTO','SEPTIEMBRE','OCTUBRE','NOVIEMBRE','DICIEMBRE'];
+            $mes_string = $meses_del_año[intval($mes)];
+            // 
+            $temp = DB::insert("INSERT into cauciones (valor_ingresado,valor_devolucion,propietario,creado,dias,activo,ganancia_neta,porcentaje_ganancia,porcentaje_anual_ganancia,mes,periodo,ganancia_neta_string,porcentaje_ganancia_string,porcentaje_anual_ganancia_string,mes_string,ingresado_string,devolucion_string) VALUES(".$ingresado.",".$devolver.",'".$persona."','".$fecha."',".$dias.",".$activo.",".$ganancia.",".$porcentaje.",".$porcentaje_anual.",".$mes.",'".$periodo."','".$ganancia_neta_string."','".$ganancia_neta_string."','".$porcentaje_ganancia_string."','".$mes_string."','".$valor_ingresado_string."','".$valor_devolucion_string."')");
 
             return 1;
         } else {
@@ -103,7 +113,7 @@ class CaucionesController extends Controller
     public static function detalleCaucion(){
         $id_caucion = Request::input('id_caucion');
         if ( !empty($id_caucion) ) {
-            $data_caucion = DB::select("SELECT * from cauciones WHERE id_caucion = ".$id_caucion);
+            $data_caucion = DB::select("SELECT C.ingresado_string AS valor_ingresado, C.devolucion_string AS valor_devolucion, C.creado, C.dias, C.ganancia_neta_string AS ganancia_neta, C.porcentaje_ganancia_string AS porcentaje_ganancia, C.porcentaje_anual_ganancia_string AS porcentaje_anual_ganancia, C.mes_string AS mes, P.nombre, P.apellido from cauciones AS C INNER JOIN pollitos AS P ON P.id_pollito = C.propietario WHERE id_caucion = ".$id_caucion);
 
             return json_encode($data_caucion[0]);
         }

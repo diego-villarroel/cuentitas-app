@@ -3,6 +3,7 @@
 // =========================== //
 
 function agregarCaucion() {
+    let url_hots = $('#url_host').val();
     $('#activo-caucion').on('change',function(e){
         if (e.target.checked == true) {
             e.target.value = 1;
@@ -16,17 +17,17 @@ function agregarCaucion() {
         let inputactivo = $('#activo-caucion').val();
         let formData = $(this).serialize()+'&activo='+inputactivo;
         $.ajax({
-            url:'/agregar-caucion',
+            url:url_hots+'/agregar-caucion',
             method: 'post',
             data: formData,
             success: function(resp){
                 if (resp == '1') {
                     M.toast({html: 'Caución agregada con éxito! Recargando ...', classes: 'rounded green'});
                     setInterval(() => {
-                        window.location.replace('/cauciones');
+                        window.location.replace(url_hots+'/cauciones');
                     }, 3000);
                 } else {
-                    console.log('error');
+                    M.toast({html: 'Ups! Ocurrió un error al agregar una Caución. Intenta nuevamente', classes: 'rounded red'});
                 }
             }
         })
@@ -34,6 +35,7 @@ function agregarCaucion() {
 }
 
 function borrarCaucion() {
+    let url_hots = $('#url_host').val();
     $('.borrar-caucion').on('click',function(){
         let caucion_select = $(this).data('id-caucion');
         let caucion_fecha = $(this).data('fecha-caucion');
@@ -48,18 +50,18 @@ function borrarCaucion() {
     
     $('#confirm_borrar_caucion').on('click',function(){
         $.ajax({
-            url: '/borrar-caucion',
+            url: url_hots+'/borrar-caucion',
             method: 'post',
             data: $('#frm-borrar-caucion').serialize(),
-            success: function(){
+            success: function(resp){
                 if (resp == '1') {
                     $('#exito-borrar-caucion').removeClass('hide');
                     M.toast({html: 'Borraste la Caución :( Recargando ...', classes: 'rounded violet'});
                     setInterval(() => {
-                        window.location.replace('/cauciones');
+                        window.location.replace(url_hots+'/cauciones');
                     }, 2000);
                 } else {
-                    console.log('error');
+                    M.toast({html: 'Ups! Ocurrió un error al borrar una Caución. Intenta nuevamente', classes: 'rounded red'});
                 }
             }
         })
@@ -67,24 +69,25 @@ function borrarCaucion() {
 }
 
 function detalleCaucion() {
+    let url_hots = $('#url_host').val();
     $('.detalle-caucion').on('click', function(){
         let id_caucion = $(this).data('id-caucion');
         $('#frm-detalle-caucion [name="id_caucion"]').val(id_caucion)
         $.ajax({
             method: 'post',
-            url: '/detalle-caucion',
+            url: url_hots+'/detalle-caucion',
             data: $('#frm-detalle-caucion').serialize(),
             success: function(resp) {
                 let data = JSON.parse(resp);
-                $('#frm-edicion-caucion [name="id_caucion"]').val(data.id_caucion);
-                $('#frm-edicion-caucion [name="ingresado"]').val(data.valor_ingresado);
-                $('#frm-edicion-caucion [name="devolver"]').val(data.valor_devolucion);
-                $('#frm-edicion-caucion [name="persona"]').val(data.propietario);
-                $('#frm-edicion-caucion [name="fecha"]').val(data.creado);
-                $('#frm-edicion-caucion [name="dias"]').val(data.dias);
-                $('#frm-edicion-caucion [name="activo"]').val(data.activo);
-                M.updateTextFields();
-                $('.select-dropdown').prop('disabled',true);
+                $('#detalle_ingresado').html(data.valor_ingresado);
+                $('#detalle_ganancia').html(data.ganancia_neta);
+                $('#detalle_devuelto').html(data.valor_devolucion);
+                $('#porc_mensual').html(data.porcentaje_ganancia);
+                $('#porc_anual').html(data.porcentaje_anual_ganancia);
+                $('#mes').html(data.mes);
+                $('#creado').html(data.creado);
+                $('#dias').html(data.dias);
+                $('#propietario').html(data.nombre+' '+data.apellido);
             }
         })
     });

@@ -3,6 +3,7 @@
 // =========================== //
 
 function agregarFactura() {
+    let url_hots = $('#url_host').val();
     $('#de_casa').on('change',function(e){
         if (e.target.checked == true) {
             e.target.value = 1;
@@ -15,14 +16,14 @@ function agregarFactura() {
         e.preventDefault();
         let formData = $(this).serialize();
         $.ajax({
-            url:'/agregar-factura',
+            url:url_hots+'/agregar-factura',
             method: 'post',
             data: formData,
             success: function(resp){
                 if (resp == '1') {
                     M.toast({html: 'Factura agregada con éxito! Recargando ...', classes: 'rounded green'});
                     setInterval(() => {
-                        window.location.replace('/servicios');
+                        window.location.replace(url_hots+'/servicios');
                     }, 3000);
                 } else {
                     console.log('error');
@@ -34,18 +35,19 @@ function agregarFactura() {
 }
 
 function addServicio() {
+    let url_hots = $('#url_host').val();
     $('#add-servicio').on('submit',function(e){
         e.preventDefault();
         let formData = $(this).serialize();
         $.ajax({
-            url:'/agregar-servicio',
+            url:url_hots+'/agregar-servicio',
             method: 'post',
             data: formData,
             success: function(resp){
                 if (resp == '1') {
                     M.toast({html: 'Servicio agregado con éxito! Recargando ...', classes: 'rounded green'});
                     setInterval(() => {
-                        window.location.replace('/servicios');
+                        window.location.replace(url_hots+'/servicios');
                     }, 3000);
                 } else {
                     console.log('error');
@@ -56,6 +58,7 @@ function addServicio() {
 }
 
 function pagarFactura() {
+    let url_hots = $('#url_host').val();
     $('.pagar-factura').on('click',function(){
         let factura_select = $(this).data('id-factura');
         let monto = $(this).data('monto');
@@ -70,17 +73,49 @@ function pagarFactura() {
     
     $('#confirm_pagar_factura_servicio').on('click',function(){
         $.ajax({
-            url: '/pagar-factura',
+            url: url_hots+'/pagar-factura',
             method: 'post',
             data: $('#frm-pagar-factura').serialize(),
             success: function(resp){
                 if (resp == '1') {
                     M.toast({html: 'Pagaste la Factura con éxito! Recargando ...', classes: 'rounded green'});
                     setInterval(() => {
-                        window.location.replace('/servicios');
+                        window.location.replace(url_hots+'/servicios');
                     }, 2000);
                 } else {
                     console.log('error');
+                }
+            }
+        })
+    });
+}
+
+function borrarFactura() {
+    let url_hots = $('#url_host').val();
+    $('.borrar-resumen').on('click',function(){
+        let id_factura = $(this).data('id-factura');
+        let monto = $(this).data('monto');
+        let vencimiento = $(this).data('vencimiento');
+        let servicio = $(this).data('servicio');
+        $('#valor_servicio_borrar').text(monto);
+        $('#servicio_borrar').text(servicio.toUpperCase());
+        $('#vencimiento_servicio_borrar').text(vencimiento);
+        $('#frm-pagar-factura [name="id_factura"]').val(id_factura);
+    })
+
+    $('#confirm_borrar_factura_servicio').on('click',function(){
+        $.ajax({
+            url: url_hots+'/borrar-factura',
+            method: 'post',
+            data: $('#frm-pagar-factura').serialize(),
+            success: function(resp){
+                if (resp == '1') {
+                    M.toast({html: 'Borraste la Factura :( Recargando ...', classes: 'rounded'});
+                    setInterval(() => {
+                        window.location.replace(url_hots+'/servicios');
+                    }, 3000);
+                } else {
+                    M.toast({html: 'Ups! Ocurrió un error al borrar resumen. Intenta nuevamente', classes: 'rounded red'});
                 }
             }
         })

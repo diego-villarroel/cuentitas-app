@@ -3,6 +3,7 @@
 // ============================== //
 
 function agregarPlazoFijo() {
+    let url_hots = $('#url_host').val();
     $('#activo-plazo-fijo').on('change',function(e){
         if (e.target.checked == true) {
             e.target.value = 1;
@@ -16,17 +17,17 @@ function agregarPlazoFijo() {
         let inputactivo = $('#activo-plazo-fijo').val();
         let formData = $(this).serialize()+'&activo='+inputactivo;
         $.ajax({
-            url:'/agregar-plazo-fijo',
+            url:url_hots+'/agregar-plazo-fijo',
             method: 'post',
             data: formData,
             success: function(resp){
                 if (resp == '1') {                    
                     M.toast({html: 'Plazo Fijo agregado con éxito! Recargando ...', classes: 'rounded green'});
                     setInterval(() => {
-                        window.location.replace('/plazos-fijos');
+                        window.location.replace(url_hots+'/plazos-fijos');
                     }, 3000);
                 } else {
-                    console.log('error');
+                    M.toast({html: 'Ups! Ocurrió un error al agregar un Plazo Fijo. Intenta nuevamente', classes: 'rounded red'});
                 }
             }
         })
@@ -34,6 +35,7 @@ function agregarPlazoFijo() {
 }
 
 function borrarPlazoFijo() {
+    let url_hots = $('#url_host').val();
     $('.borrar-pf').on('click',function(){
         let pf_select = $(this).data('id-pf');
         let pf_tipo = $(this).data('tipo-pf');
@@ -50,17 +52,17 @@ function borrarPlazoFijo() {
     
     $('#confirm_borrar_pf').on('click',function(){
         $.ajax({
-            url: '/borrar-plazo-fijo',
+            url: url_hots+'/borrar-plazo-fijo',
             method: 'post',
             data: $('#frm-borrar-pf').serialize(),
-            success: function(){
+            success: function(resp){
                 if (resp == '1') {
                     M.toast({html: 'Borraste el Plazo Fijo :( Recargando ...', classes: 'rounded violet'});
                     setInterval(() => {
-                        window.location.replace('/plazos-fijos');
+                        window.location.replace(url_hots+'/plazos-fijos');
                     }, 2000);
                 } else {
-                    console.log('error');
+                    M.toast({html: 'Ups! Ocurrió un error al borrar un Plazo Fijo. Intenta nuevamente', classes: 'rounded red'});
                 }
             }
         })
@@ -68,26 +70,26 @@ function borrarPlazoFijo() {
 }
 
 function detallePlazoFijo() {
+    let url_hots = $('#url_host').val();
     $('.detalle_pf').on('click',function(){
         let id_pf = $(this).data('id-pf');
         $('#frm-detalle-pf [name="id_plazo_fijo"]').val(id_pf)
         $.ajax({
-            url: '/detalle-plazo-fijo',
+            url: url_hots+'/detalle-plazo-fijo',
             method: 'post',
             data: $('#frm-detalle-pf').serialize(),
             success: function(resp){
                 let data = JSON.parse(resp);
-                $('#frm-edicion-pf [name="id_detalle_pf"]').val(data.id_plazo_fijo);
-                $('#frm-edicion-pf [name="ingresado"]').val(data.valor_ingresado);
-                $('#frm-edicion-pf [name="devolver"]').val(data.valor_devolucion);
-                $('#frm-edicion-pf [name="persona"]').val(data.propietario);
-                $('#frm-edicion-pf [name="banco"]').val(data.id_banco);
-                $('#frm-edicion-pf [name="tipo_pf"]').val(data.tipo_plazo_fijo);
-                $('#frm-edicion-pf [name="fecha"]').val(data.fecha_ingresado);
-                $('#frm-edicion-pf [name="dias"]').val(data.cantidad_dias);
-                $('#frm-edicion-pf [name="activo"]').val(data.activo);
-                M.updateTextFields();
-                // $('.select-dropdown').prop('disabled',true);
+                $('#detalle_ingresado').html(data.ingresado_string);
+                $('#detalle_ganancia').html(data.ganancia_neta_string);
+                $('#detalle_devuelto').html(data.devolucion_string);
+                $('#porc_ganancia').html(data.porcentaje_ganancia_string);
+                $('#porc_anual').html(data.porcentaje_ganancia_anual_string);
+                $('#creado').html(data.fecha_ingresado);
+                $('#dias').html(data.cantidad_dias);
+                $('#quien').html(data.nombre_p+' '+data.apellido_p);
+                $('#devolucion').html(data.fecha_devolucion);
+                $('#banco').html(data.nombre_banco);
             }
         })
     });

@@ -36,16 +36,6 @@
         </div>
     </div>
     <div class="col s12 right-align">
-        <button type="submit" class="waves-effect waves-light btn">Agregar</button>
+        <button type="submit" class="waves-effect waves-light purple darken-4 btn">Agregar</button>
     </div>
 </form>
-<div id="exito-add-caucion" class="col s12 hide">
-    <div class="card">
-        <div class="card-content">
-            <span class="card-title center-align">Caución agregada con éxito! Recargando</span>
-            <div class="progress" style="margin-top:20px;margin-bottom:20px">
-                <div class="indeterminate"></div>
-            </div>
-        </div>
-    </div>
-</div>

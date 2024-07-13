@@ -5,12 +5,12 @@
                 <h4>Plazos Fijos</h4>
             </div>
             <div class="col s12 m5 right-align">
-                <button class="btn waves-effect waves-light modal-trigger" data-target="modal_add_pf">Nuevo Plazo Fijo</button>
+                <button class="btn light-green darken-4 waves-effect waves-light modal-trigger" data-target="modal_add_pf">Nuevo Plazo Fijo</button>
             </div>
         </div>
         <div class="row center-align">
             <div class="col s12 m6">
-                <div class="card blue-grey darken-1">
+                <div class="card purple darken-4">
                     <div class="card-content white-text">
                         <span class="card-title">Plazos Fijos Tradicionales</span>
                         <p>Activos</p>
@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="col s12 m6">
-                <div class="card blue-grey darken-1">
+                <div class="card purple darken-4">
                     <div class="card-content white-text">
                         <span class="card-title">Plazos Fijos UVA</span>
                         <p>Activos</p>
@@ -72,8 +72,8 @@
                                             <td>$@if( isset(explode('.',$pf->ganancia_neta)[1]) && strlen(explode('.',$pf->ganancia_neta)[1]) > 2 ) {{explode('.',$pf->ganancia_neta)[0]}}.{{substr(explode('.',$pf->ganancia_neta)[1],0,2)}} @else {{$pf->ganancia_neta}} @endif</td>
                                             <td>@if( isset(explode('.',$pf->porcentaje_ganancia_anual)[1]) && strlen(explode('.',$pf->porcentaje_ganancia_anual)[1]) > 2 ) {{explode('.',$pf->porcentaje_ganancia_anual)[0]}}.{{substr(explode('.',$pf->porcentaje_ganancia_anual)[1],0,2)}} @else {{$pf->porcentaje_ganancia_anual}} @endif%</td>
                                             <td>
-                                                <button class="btn waves-effect waves-light modal-trigger detalle_pf" data-id-pf="{{$pf->id_plazo_fijo}}" data-target="modal_detalle_pf"><i class="material-icons dp48">remove_red_eye</i></button>
-                                                <button class="btn waves-effect waves-light borrar-pf modal-trigger" data-target="modal_confirm_borrar_pf" data-id-pf="{{$pf->id_plazo_fijo}}" data-tipo-pf="@foreach ($tipos_pf as $tpf)
+                                                <button class="btn purple lighten-2 waves-effect waves-light modal-trigger detalle_pf" data-id-pf="{{$pf->id_plazo_fijo}}" data-target="modal_detalle_pf"><i class="material-icons dp48">remove_red_eye</i></button>
+                                                <button class="btn red darken-4 waves-effect waves-light borrar-pf modal-trigger" data-target="modal_confirm_borrar_pf" data-id-pf="{{$pf->id_plazo_fijo}}" data-tipo-pf="@foreach ($tipos_pf as $tpf)
                                                     @if ($tpf->id_tipo_pf == $pf->tipo_plazo_fijo)
                                                         {{$tpf->nombre_tipo_pf}}
                                                     @endif
@@ -127,8 +127,8 @@
                                             <td>$@if( isset(explode('.',$pf->ganancia_neta)[1]) && strlen(explode('.',$pf->ganancia_neta)[1]) > 2 ) {{explode('.',$pf->ganancia_neta)[0]}}.{{substr(explode('.',$pf->ganancia_neta)[1],0,2)}} @else {{$pf->ganancia_neta}} @endif</td>
                                             <td>@if( isset(explode('.',$pf->porcentaje_ganancia_anual)[1]) && strlen(explode('.',$pf->porcentaje_ganancia_anual)[1]) > 2 ) {{explode('.',$pf->porcentaje_ganancia_anual)[0]}}.{{substr(explode('.',$pf->porcentaje_ganancia_anual)[1],0,2)}} @else {{$pf->porcentaje_ganancia_anual}} @endif%</td>
                                             <td>
-                                                <button class="btn waves-effect waves-light modal-trigger detalle_pf" data-id-pf="{{$pf->id_plazo_fijo}}" data-target="modal_detalle_pf"><i class="material-icons dp48">remove_red_eye</i></button>
-                                                <button class="btn waves-effect waves-light borrar-pf modal-trigger" data-target="modal_confirm_borrar_pf" data-id-pf="{{$pf->id_plazo_fijo}}" data-tipo-pf="@foreach ($tipos_pf as $tpf)
+                                                <button class="btn purple lighten-2 waves-effect waves-light modal-trigger detalle_pf" data-id-pf="{{$pf->id_plazo_fijo}}" data-target="modal_detalle_pf"><i class="material-icons dp48">remove_red_eye</i></button>
+                                                <button class="btn red darken-4 waves-effect waves-light borrar-pf modal-trigger" data-target="modal_confirm_borrar_pf" data-id-pf="{{$pf->id_plazo_fijo}}" data-tipo-pf="@foreach ($tipos_pf as $tpf)
                                                     @if ($tpf->id_tipo_pf == $pf->tipo_plazo_fijo)
                                                         {{$tpf->nombre_tipo_pf}}
                                                     @endif
@@ -158,16 +158,6 @@
             <div class="row">
                 <div class="col s12 center-align">
                     <button class="btn red waves-effect waves-light" id="confirm_borrar_pf">Borrar</button>
-                </div>
-            </div>
-            <div id="exito-borrar-pf" class="col s12 hide">
-                <div class="card">
-                    <div class="card-content">
-                        <span class="card-title center-align">Borraste el Plazo Fijo seleccionado... Recargando</span>
-                        <div class="progress" style="margin-top:20px;margin-bottom:20px">
-                            <div class="indeterminate"></div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
