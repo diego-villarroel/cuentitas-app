@@ -12,6 +12,8 @@
     <div class="input-field col s12 m6">
         <input id="valor" name="valor" type="text" class="validate">
         <label for="valor">Valor</label>
+        <small class="grey-text">(Punto para separar centavos solamente)</small><br>
+        <small id="error_valor" class="red-text d-none"></small>
     </div>
     <div class="input-field col s12 m6">
         <input id="vencimiento_1" name="vencimiento_1" type="date" class="validate">
@@ -24,6 +26,8 @@
     <div class="input-field col s12 m6">
         <input id="valor_mora" name="valor_mora" type="text" class="validate">
         <label for="valor_mora">Valor con Mora</label>
+        <small class="grey-text">(Punto para separar centavos solamente)</small><br>
+        <small id="error_mora" class="red-text d-none"></small>
     </div>
     <div class="col s12 right-align">
         <button type="submit" class="waves-effect waves-light purple darken-4 btn">Agregar</button>

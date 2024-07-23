@@ -29,6 +29,10 @@ body {
     display: none;
 }
 
+.upper {
+    text-transform:uppercase;
+}
+
 .modal {
     max-height: 100% !important;
 }

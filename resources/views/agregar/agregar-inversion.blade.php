@@ -5,11 +5,13 @@
         <label for="nombre_inversion">Nombre</label>
     </div>
     <div class="input-field col s12 m6">
-        <input id="valor_total" name="valor_total" type="text" class="validate" placeholder="$">
+        <input id="valor_total" name="valor_total" type="text" placeholder="$">
         <label for="valor_total">Valor total de compra</label>
+        <small class="grey-text">(Punto para separar centavos solamente)</small><br>
+        <small id="error_valor_total" class="red-text d-none"></small>
     </div>
     <div class="input-field col s12 m6">
-        <input id="empresa" name="empresa" type="text" class="validate">
+        <input id="empresa" name="empresa" type="text">
         <label for="empresa">Empresa/Entidad</label>
     </div>
     <div class="input-field col s12 m6">

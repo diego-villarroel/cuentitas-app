@@ -138,6 +138,7 @@
             detallePlazoFijo();
         </script>
     @elseif ( $_SERVER['REQUEST_URI'] == env('URL_HOST').'/login' )
+        <input type="hidden" id="base_host" value="{{$_SERVER['HTTP_REFERER']}}">
         <script src="{{env('URL_HOST')}}/js/login.js?v={{rand()}}"></script>
         <script>
             validaciones('{{$_SERVER['REQUEST_URI']}}');

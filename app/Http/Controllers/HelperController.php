@@ -18,9 +18,17 @@ class HelperController extends Controller
                 $miles = strlen($valor_string) - 3;
                 $valor_string = substr($valor_string, 0, $miles).'.'.substr($valor_string, -3);
             }
-            if (strlen($valor_string) > 7 && strlen($valor_string) < 9) {
-                $millones = strlen($valor_string) - 6;
-                $valor_string = substr($valor_string, 0, $millones).'.'.substr($valor_string, -6, -4).'.'.substr($valor_string, -3);
+            if (strlen($valor_string) > 6 && strlen($valor_string) < 10) {
+                $centimiles = strlen($valor_string) - 6;
+                $valor_string = substr($valor_string, 0, $centimiles).'.'.substr($valor_string, -6, -3).'.'.substr($valor_string, -3);
+            }
+            if (strlen($valor_string) > 9 && strlen($valor_string) < 12) {
+                $millones = strlen($valor_string) - 9;
+                $valor_string = substr($valor_string, 0, $millones).'.'.substr($valor_string, -9, -6).'.'.substr($valor_string, -6, -3).'.'.substr($valor_string, -3);
+            }
+            if (strlen($valor_string) > 11 && strlen($valor_string) < 14) {
+                $millones = strlen($valor_string) - 12;
+                $valor_string = substr($valor_string, 0, $millones).'.'.substr($valor_string, -12, -9).'.'.substr($valor_string, -9, -6).'.'.substr($valor_string, -6, -3).'.'.substr($valor_string, -3);
             }
             if (isset(explode('.',strval($valor))[1])) {
                 $valor_string .= ','.substr(explode('.',strval($valor))[1],0,2);

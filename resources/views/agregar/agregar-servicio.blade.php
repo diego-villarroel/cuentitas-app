@@ -1,5 +1,6 @@
 <form id="add-servicio" class="row">
     {{ csrf_field() }}
+    <input type="hidden" name="de_casa" value="0">
     <div class="input-field col s12 m6">
         <input id="nombre_empresa" name="nombre_empresa" type="text" class="validate">
         <label>Nombre Empresa</label>
@@ -12,7 +13,7 @@
         <div class="switch">
             <label>
                 AMOR
-                <input type="checkbox" id="de_casa" name="de_casa" value="0">
+                <input type="checkbox" id="de_casa" value="0">
                 <span class="lever"></span>
                 De Casita
             </label>

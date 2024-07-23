@@ -12,6 +12,8 @@
     <div class="input-field col s12 m6">
         <input id="valor" name="valor" type="text" class="validate">
         <label for="valor">Monto</label>
+        <small class="grey-text">(Punto para separar centavos solamente)</small><br>
+        <small id="error_mora" class="red-text d-none"></small>
     </div>
     <div class="input-field col s12 m6">
         <input id="vencimiento" name="vencimiento" type="date" class="validate">

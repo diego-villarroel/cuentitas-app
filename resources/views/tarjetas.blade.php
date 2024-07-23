@@ -50,54 +50,58 @@
             @endforeach
         </div>
         @if (!empty($data_tarjetas->data_completa))
-        <hr>
-        <ul class="collapsible popout">
-            @foreach ($lista_tarjetas as $tarjeta)
-                @if ( isset($lista_resumen_tarjetas->resumenes_tarjetas[$tarjeta->id_tarjeta]) && !empty($lista_resumen_tarjetas->resumenes_tarjetas[$tarjeta->id_tarjeta]) )
-                    <li>
-                        <div class="collapsible-header" tabindex="0">
-                            <i class="material-icons">filter_drama</i>Resúmenes de {{$lista_resumen_tarjetas->nombres_tarjetas[$tarjeta->id_tarjeta]}}
-                        </div>
-                        <div class="collapsible-body" style="">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Periodo</th>
-                                        <th>Monto</th>
-                                        <th>Estado</th>
-                                        <th>Vencimiento</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($lista_resumen_tarjetas->resumenes_tarjetas[$tarjeta->id_tarjeta] as $resumen)
-                                    <tr>
-                                        <td>{{$resumen->periodo}}</td>
-                                        <td>${{$resumen->monto}}</td>
-                                        <td>
-                                            @if (isset($resumen->pagado) && $resumen->pagado == 1)
-                                                <i class="material-icons dp48 tooltipped green-text" data-tooltip="Pagado">attach_money</i>
-                                            @else 
-                                                <i class="material-icons dp48 tooltipped red-text" data-tooltip="Impago">money_off</i>
-                                            @endif
-                                        </td>
-                                        <td>${{$resumen->vencimiento}}</td>
-                                        <td>
-                                            <button class="btn purple lighten-2 wave-effect waves-light tooltipped modal-trigger detalle-resumen" data-tooltip="Editar" data-target="modal_detalle_tarjeta" data-id-resumen="{{$resumen->id_resumen_tarjeta}}"><i class="material-icons dp48">remove_red_eye</i></button>
-                                            <button class="btn red darken-4 waves-effect waves-light modal-trigger tooltipped borrar-resumen" data-target="modal_confirm_borrar_resumen" data-id-resumen="{{$resumen->id_resumen_tarjeta}}" data-periodo="{{$resumen->periodo}}" data-monto="{{$resumen->monto}}" data-vencimiento="{{$resumen->vencimiento}}" data-tarjeta="@foreach ($lista_tarjetas as $tarjeta) @if($tarjeta->id_tarjeta == $resumen->id_tarjeta) {{$tarjeta->nombre_tarjeta}} @endif @endforeach" data-tooltip="Borrar"><i class="material-icons dp48">delete_forever</i></button>
-                                            @if ($resumen->pagado == '0')
-                                            <button class="btn light-green darken-4 waves-effect waves-light modal-trigger tooltipped pagar-resumen" data-id-resumen="{{$resumen->id_resumen_tarjeta}}" data-target="modal_confirm_pagar_resumen"  data-periodo="{{$resumen->periodo}}" data-monto="{{$resumen->monto}}" data-vencimiento="{{$resumen->vencimiento}}" data-tarjeta="@foreach ($lista_tarjetas as $tarjeta) @if($tarjeta->id_tarjeta == $resumen->id_tarjeta) {{$tarjeta->nombre_tarjeta}} @endif @endforeach" data-tooltip="Pagar"><i class="material-icons dp48">monetization_on</i></button>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </li>
-                @endif
-            @endforeach
-        </ul>
+            <hr>
+            <ul class="collapsible popout">
+                @foreach ($lista_tarjetas as $tarjeta)
+                    @if ( isset($lista_resumen_tarjetas->resumenes_tarjetas[$tarjeta->id_tarjeta]) && !empty($lista_resumen_tarjetas->resumenes_tarjetas[$tarjeta->id_tarjeta]) )
+                        <li>
+                            <div class="collapsible-header" tabindex="0">
+                                <i class="material-icons">filter_drama</i>Resúmenes de {{$lista_resumen_tarjetas->nombres_tarjetas[$tarjeta->id_tarjeta]}}
+                            </div>
+                            <div class="collapsible-body" style="">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Periodo</th>
+                                            <th>Monto</th>
+                                            <th>Estado</th>
+                                            <th>Vencimiento</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($lista_resumen_tarjetas->resumenes_tarjetas[$tarjeta->id_tarjeta] as $resumen)
+                                        <tr>
+                                            <td>{{$resumen->periodo}}</td>
+                                            <td>${{$resumen->monto}}</td>
+                                            <td>
+                                                @if (isset($resumen->pagado) && $resumen->pagado == 1)
+                                                    <i class="material-icons dp48 tooltipped green-text" data-tooltip="Pagado">attach_money</i>
+                                                @else 
+                                                    <i class="material-icons dp48 tooltipped red-text" data-tooltip="Impago">money_off</i>
+                                                @endif
+                                            </td>
+                                            <td>${{$resumen->vencimiento}}</td>
+                                            <td>
+                                                <button class="btn purple lighten-2 wave-effect waves-light tooltipped modal-trigger detalle-resumen" data-tooltip="Editar" data-target="modal_detalle_tarjeta" data-id-resumen="{{$resumen->id_resumen_tarjeta}}"><i class="material-icons dp48">remove_red_eye</i></button>
+                                                <button class="btn red darken-4 waves-effect waves-light modal-trigger tooltipped borrar-resumen" data-target="modal_confirm_borrar_resumen" data-id-resumen="{{$resumen->id_resumen_tarjeta}}" data-periodo="{{$resumen->periodo}}" data-monto="{{$resumen->monto}}" data-vencimiento="{{$resumen->vencimiento}}" data-tarjeta="@foreach ($lista_tarjetas as $tarjeta) @if($tarjeta->id_tarjeta == $resumen->id_tarjeta) {{$tarjeta->nombre_tarjeta}} @endif @endforeach" data-tooltip="Borrar"><i class="material-icons dp48">delete_forever</i></button>
+                                                @if ($resumen->pagado == '0')
+                                                <button class="btn light-green darken-4 waves-effect waves-light modal-trigger tooltipped pagar-resumen" data-id-resumen="{{$resumen->id_resumen_tarjeta}}" data-target="modal_confirm_pagar_resumen"  data-periodo="{{$resumen->periodo}}" data-monto="{{$resumen->monto}}" data-vencimiento="{{$resumen->vencimiento}}" data-tarjeta="@foreach ($lista_tarjetas as $tarjeta) @if($tarjeta->id_tarjeta == $resumen->id_tarjeta) {{$tarjeta->nombre_tarjeta}} @endif @endforeach" data-tooltip="Pagar"><i class="material-icons dp48">monetization_on</i></button>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </li>
+                    @endif
+                @endforeach
+            </ul>
+        @else
+            <div class="row">
+                <h5 class="center-align">Sin Resúmenes de Tarjetas</h5>
+            </div>
         @endif
     </section>
     <form id="frm-accion-resumen">

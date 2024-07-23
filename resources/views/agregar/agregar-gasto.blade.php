@@ -28,6 +28,8 @@
     <div class="input-field col s12 m6">
         <input id="valor" name="valor" type="text" class="validate" placeholder="$">
         <label for="valor">Gasto</label>
+        <small class="grey-text">(Punto para separar centavos solamente)</small><br>
+        <small id="error_valor" class="red-text d-none"></small>
     </div>
     
     <div class="col s12 right-align">

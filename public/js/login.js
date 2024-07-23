@@ -1,9 +1,10 @@
-// =========================== //
-// ======== CAUCIONES ======== //
-// =========================== //
+// ======================= //
+// ======== LOGIN ======== //
+// ======================= //
 
 function validaciones(url) {
-    let url_hots = $('#url_host').val();
+    let base_url = $('#base_host').val();
+    let url_hots = $('#url_host').val() != '' ? $('#url_host').val()+'/' : '';
     let error_email_validacion = 1;
     let validaciones_correctas_pass = 0; // EL VALOR CORRECTO ES 6 (LA SUMA DE LOS VALORES ARBITRARIOS DE CADA VALIDACIÓN (ENTRE 8 Y 20 CARACTERES, QUE TENGA UNA MAYÚSCULA, QUE TENGA NÚMEROS))
     // 
@@ -23,7 +24,7 @@ function validaciones(url) {
             if (error_email_validacion == 0 && validaciones_correctas_pass == 6) {
                 $.ajax({
                     method:'post',
-                    url: url_hots+'/logearse',
+                    url: base_url+url_hots+'logearse',
                     data: $('#login').serialize(),
                     success: function(resp){
                         if (resp == 1) {

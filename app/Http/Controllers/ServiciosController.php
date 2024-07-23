@@ -81,7 +81,7 @@ class ServiciosController extends Controller
         $nombre_servicio = Request::input('nombre_empresa');
         $tipo_servicio = Request::input('servicio');
         $de_casa = Request::input('de_casa');
-        $lista_servicios = DB::select("SELECT * from servicios WHERE nombre_servicio LIKE '".$nombre_servicio."' AND servicio LIKE '".$tipo_servicio."'");
+        $lista_servicios = DB::select("SELECT * from servicios WHERE nombre_servicio LIKE '%".$nombre_servicio."%' AND servicio LIKE '%".$tipo_servicio."%'");
         $existe = 0;
         if (!empty($lista_servicios)) {
             $existe = 1;

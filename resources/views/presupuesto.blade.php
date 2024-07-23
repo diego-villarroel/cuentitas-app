@@ -40,7 +40,7 @@
             </div>
         @else
             <div class="row">
-                <h5 class="center-align">Sin presupuestos</h5>
+                <h5 class="center-align">Sin Presupuestos</h5>
             </div>
         @endif
 

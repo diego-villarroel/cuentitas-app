@@ -3,10 +3,14 @@
     <div class="input-field col s12 m6">
         <input id="ingresado" name="ingresado" type="text" class="validate">
         <label for="ingresado">Monto Ingresado</label>
+        <small class="grey-text">(Punto para separar centavos solamente)</small><br>
+        <small id="error_ingresado" class="red-text d-none"></small>
     </div>
     <div class="input-field col s12 m6">
         <input id="devolver" name="devolver" type="text" class="validate">
         <label for="devolver">Monto a Devolver</label>
+        <small class="grey-text">(Punto para separar centavos solamente)</small><br>
+        <small id="error_devolver" class="red-text d-none"></small>
     </div>
     <div class="input-field col s12 m12">
         <select id="tipo_pf" name="nombre" id="nombre">

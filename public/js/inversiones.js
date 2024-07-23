@@ -76,6 +76,10 @@ function inversiones() {
             }
         );
     })
+
+    $('#nombre_inversion').on('key',function(){
+        $(this).val($(this).val().toUpperCase());
+    });
 }
 
 function agregarInversion() {
@@ -83,6 +87,24 @@ function agregarInversion() {
     $('#add-inversion').on('submit',function(e){
         e.preventDefault();
         let formData = $(this).serialize();
+        let validar = $('#valor_total').val();
+        let regExp = /[a-zA-Z]/;
+        // 
+        if (validar.includes(',')) {
+            $('#valor_total').addClass('invalid');
+            $('#error_valor_total').html('No está permitido usar comas');
+            $('#error_valor_total').removeClass('d-none');
+            return;
+        } else if (regExp.test(validar)) {
+            $('#valor_total').addClass('invalid');
+            $('#error_valor_total').html('Solo números');
+            $('#error_valor_total').removeClass('d-none');
+            return;
+        } else {
+            $('#valor_total').addClass('valid');
+            $('#error_valor_total').addClass('d-none');
+        }
+        // 
         $.ajax({
             url:url_hots+'/agregar-inversion',
             method: 'post',

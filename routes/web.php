@@ -44,7 +44,7 @@ Route::post('/borrar-inversion','InversionesController@borrarInversion')->middle
 // SERVICIOS
 Route::get('/servicios','AhorrappController@serviciosVista')->middleware('login');
 Route::post('/agregar-servicio','ServiciosController@addServicio')->middleware('login');
-Route::post('/borrar-servicio','ServiciosController@addServicio')->middleware('login');
+// Route::post('/borrar-servicio','ServiciosController@addServicio')->middleware('login');
 Route::post('/agregar-factura','ServiciosController@addFactura')->middleware('login');
 Route::post('/borrar-factura','ServiciosController@borrarFactura')->middleware('login');
 Route::post('/pagar-factura','ServiciosController@pagarFactura')->middleware('login');

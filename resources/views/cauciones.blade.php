@@ -8,89 +8,96 @@
                 <button class="btn light-green darken-4 waves-effect waves-light modal-trigger" data-target="modal_add_caucion">Nueva Caución</button>
             </div>
         </div>
-        <div class="row">
-            <div class="col s12 m5">
-                <div class="card purple darken-4">
-                    <div class="card-content white-text">
-                        <span class="card-title">Cauciones Total</span>
-                        <p>Cantidad de Cauciones:</p>
-                        <h5>{{$resumen_cau->total_cantidad_cauciones}}</h5>
-                        <p>Ganancias Totales:</p>
-                        <h5>${{$resumen_cau->ganancia_total}}</h5>
+
+        @if (!empty($resumen_cau) )
+            <div class="row">
+                <div class="col s12 m5">
+                    <div class="card purple darken-4">
+                        <div class="card-content white-text">
+                            <span class="card-title">Cauciones Total</span>
+                            <p>Cantidad de Cauciones:</p>
+                            <h5>{{$resumen_cau->total_cantidad_cauciones}}</h5>
+                            <p>Ganancias Totales:</p>
+                            <h5>${{$resumen_cau->ganancia_total}}</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col m2">
+                </div>
+                <div class="col s12 m5">
+                    <div class="card purple darken-4">
+                        <div class="card-content white-text">
+                            <span class="card-title">Cauciones Mensual</span>
+                            <p>Activos</p>
+                            <h5>{{$resumen_cau->activos}}</h5>
+                            <p>Ganancias</p>
+                            <h5>${{$resumen_cau->ganancias_mensuales}}</h5>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col m2">
-            </div>
-            <div class="col s12 m5">
-                <div class="card purple darken-4">
-                    <div class="card-content white-text">
-                        <span class="card-title">Cauciones Mensual</span>
-                        <p>Activos</p>
-                        <h5>{{$resumen_cau->activos}}</h5>
-                        <p>Ganancias</p>
-                        <h5>${{$resumen_cau->ganancias_mensuales}}</h5>
+            <hr>
+            <ul class="collapsible popout">
+                @foreach ($resumen_cau->data_cauciones_por_periodo as $k => $periodo)
+                <li>
+                    <div class="collapsible-header" tabindex="0">
+                        <i class="material-icons dp48">date_range</i>{{$k}}
                     </div>
-                </div>
-            </div>
-        </div>
-        <hr>
-        <ul class="collapsible popout">
-            @foreach ($resumen_cau->data_cauciones_por_periodo as $k => $periodo)
-            <li>
-                <div class="collapsible-header" tabindex="0">
-                    <i class="material-icons dp48">date_range</i>{{$k}}
-                </div>
-                <div class="collapsible-body">
-                    <div class="row center-align data-mes">
-                        <div class="col s12 m4">
-                            Cauciones del mes: {{$periodo['cantidad']}}
+                    <div class="collapsible-body">
+                        <div class="row center-align data-mes">
+                            <div class="col s12 m4">
+                                Cauciones del mes: {{$periodo['cantidad']}}
+                            </div>
+                            <div class="col s12 m4">
+                                Ganancias promedios: {{$periodo['ganancia_promedio']}}
+                            </div>
+                            <div class="col s12 m4">
+                                Ganancias total: {{$periodo['total']}}
+                            </div>
                         </div>
-                        <div class="col s12 m4">
-                            Ganancias promedios: {{$periodo['ganancia_promedio']}}
-                        </div>
-                        <div class="col s12 m4">
-                            Ganancias total: {{$periodo['total']}}
-                        </div>
-                    </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Fecha</th>
-                                <th>Ganancia</th>
-                                <th class="center-align">Estado</th>
-                                <th class="center-align">Porcentaje (mes)</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($periodo as $cau)
-                                @if (is_object($cau))
+                        <table>
+                            <thead>
                                 <tr>
-                                    <td>{{$cau->creado}}</td>
-                                    <td>$ {{$cau->ganancia_neta_string}}</td>
-                                    <td class="center-align">
-                                        @if ($cau->activo == 0) 
-                                        <i class="material-icons dp48">block</i> 
-                                        @else 
-                                        <i class="material-icons dp48">check</i>
-                                        @endif
-                                    
-                                    </td>
-                                    <td class="center-align">{{$cau->porcentaje_anual_ganancia_string}} %</td>
-                                    <td>
-                                        <button class="btn purple lighten-2 waves-effect waves-light modal-trigger detalle-caucion" data-target="modal_detalle_caucion" data-id-caucion="{{$cau->id_caucion}}"><i class="material-icons dp48">remove_red_eye</i></button>
-                                        <button class="btn red darken-4 waves-effect waves-light borrar-caucion modal-trigger" data-target="modal_confirm_borrar_caucion" data-id-caucion="{{$cau->id_caucion}}" data-fecha-caucion="{{$cau->creado}}" data-ganancia-caucion="{{$cau->ganancia_neta_string}}" data-porcentaje-caucion="{{$cau->porcentaje_anual_ganancia_string}}"><i class="material-icons dp48">delete_forever</i></button>
-                                    </td>
+                                    <th>Fecha</th>
+                                    <th>Ganancia</th>
+                                    <th class="center-align">Estado</th>
+                                    <th class="center-align">Porcentaje (mes)</th>
+                                    <th>Acciones</th>
                                 </tr>
-                                @endif
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </li>
-            @endforeach
-        </ul>
+                            </thead>
+                            <tbody>
+                                @foreach ($periodo as $cau)
+                                    @if (is_object($cau))
+                                    <tr>
+                                        <td>{{$cau->creado}}</td>
+                                        <td>$ {{$cau->ganancia_neta_string}}</td>
+                                        <td class="center-align">
+                                            @if ($cau->activo == 0) 
+                                            <i class="material-icons dp48">block</i> 
+                                            @else 
+                                            <i class="material-icons dp48">check</i>
+                                            @endif
+                                        
+                                        </td>
+                                        <td class="center-align">{{$cau->porcentaje_anual_ganancia_string}} %</td>
+                                        <td>
+                                            <button class="btn purple lighten-2 waves-effect waves-light modal-trigger detalle-caucion" data-target="modal_detalle_caucion" data-id-caucion="{{$cau->id_caucion}}"><i class="material-icons dp48">remove_red_eye</i></button>
+                                            <button class="btn red darken-4 waves-effect waves-light borrar-caucion modal-trigger" data-target="modal_confirm_borrar_caucion" data-id-caucion="{{$cau->id_caucion}}" data-fecha-caucion="{{$cau->creado}}" data-ganancia-caucion="{{$cau->ganancia_neta_string}}" data-porcentaje-caucion="{{$cau->porcentaje_anual_ganancia_string}}"><i class="material-icons dp48">delete_forever</i></button>
+                                        </td>
+                                    </tr>
+                                    @endif
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </li>
+                @endforeach
+            </ul>
+        @else
+            <div class="row">
+                <h5 class="center-align">Sin Cauciones</h5>
+            </div>
+        @endif
                     
     </section>
     <form id="frm-borrar-caucion">

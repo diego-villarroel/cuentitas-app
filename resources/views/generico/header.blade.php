@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.min.css">
     <!-- CSS CUSTOM -->
     <link rel="stylesheet" href="{{ env('URL_HOST') }}/css/style.css">
-    <link rel="shortcut icon" href="">
+    <link rel="shortcut icon" href="{{ env('URL_HOST') }}/img/cuentitas.png">
     <title>Cuentitas APP</title>
 </head>
 <body>

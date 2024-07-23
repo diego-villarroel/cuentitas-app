@@ -14,6 +14,36 @@ function agregarFactura() {
 
     $('#add-factura').on('submit',function(e){
         e.preventDefault();
+        let validar1 = $('#valor').val();
+        let validar2 = $('#valor_mora').val();
+        let regExp = /[a-zA-Z]/;
+        // 
+        if (validar1.includes(',')) {
+            $('#valor').addClass('invalid');
+            $('#error_valor').html('No está permitido usar comas');
+            $('#error_valor').removeClass('d-none');
+            return;
+        } else if (regExp.test(validar1)) {
+            $('#valor').addClass('invalid');
+            $('#error_valor').html('Solo números');
+            $('#error_valor').removeClass('d-none');
+            return;
+        } else if (validar2.includes(',')) {
+            $('#valor_mora').addClass('invalid');
+            $('#error_mora').html('Solo números');
+            $('#error_mora').removeClass('d-none');
+            return;
+        } else if (regExp.test(validar2)) {
+            $('#valor_mora').addClass('invalid');
+            $('#error_mora').html('Solo números');
+            $('#error_mora').removeClass('d-none');
+            return;
+        } else {
+            $('#valor').addClass('valid');
+            $('#error_valor').addClass('d-none');
+            $('#valor_mora').addClass('valid');
+            $('#error_mora').addClass('d-none');
+        }
         let formData = $(this).serialize();
         $.ajax({
             url:url_hots+'/agregar-factura',
@@ -38,7 +68,14 @@ function addServicio() {
     let url_hots = $('#url_host').val();
     $('#add-servicio').on('submit',function(e){
         e.preventDefault();
+        let de_casa = $('#de_casa').prop('checked');
+        if (de_casa) {
+            $('#add-servicio [name="de_casa"]').val('1');
+        } else {
+            $('#add-servicio [name="de_casa"]').val('0');
+        }
         let formData = $(this).serialize();
+        console.log(de_casa);
         $.ajax({
             url:url_hots+'/agregar-servicio',
             method: 'post',
@@ -49,10 +86,19 @@ function addServicio() {
                     setInterval(() => {
                         window.location.replace(url_hots+'/servicios');
                     }, 3000);
+                } else if (resp == '0') {
+                    M.toast({html: 'Existe un registro similar, cambiá el nombre por favor.', classes: 'rounded orange'});
                 } else {
-                    console.log('error');
+                    M.toast({html: 'Ups! Ocurrió un error al agregar un nuevo Tipo de Presupuesto. Intenta nuevamente', classes: 'rounded red'});
                 }
-            }
+            },
+            error: function(resp){
+                if (resp.status == 500) {
+                    M.toast({html: 'Ups! Revisá bien los datos enviados e intentá nuevamente', classes: 'rounded orange'});
+                } else {
+                    M.toast({html: 'Ups! Ocurrió un error al agregar Tipo de Presupuesto. Intenta nuevamente', classes: 'rounded red'});
+                }
+            },
         })
     });
 }

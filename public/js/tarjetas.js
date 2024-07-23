@@ -7,6 +7,23 @@ function agregarResumenTarjeta() {
     let url_hots = $('#url_host').val();
     $('#add-resumen-tarjeta').on('submit',function(e){
         e.preventDefault();
+        let validar = $('#valor').val();
+        let regExp = /[a-zA-Z]/;
+        // 
+        if (validar.includes(',')) {
+            $('#valor').addClass('invalid');
+            $('#error_valor').html('No está permitido usar comas');
+            $('#error_valor').removeClass('d-none');
+            return;
+        } else if (regExp.test(validar)) {
+            $('#valor').addClass('invalid');
+            $('#error_valor').html('Solo números');
+            $('#error_valor').removeClass('d-none');
+            return;
+        } else {
+            $('#valor').addClass('valid');
+            $('#error_valor').addClass('d-none');
+        }
         let formData = $(this).serialize();
         $.ajax({
             url:url_hots+'/agregar-resumen-tarjeta',

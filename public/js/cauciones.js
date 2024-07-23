@@ -15,6 +15,36 @@ function agregarCaucion() {
     $('#add-caucion').on('submit',function(e){
         e.preventDefault();
         let inputactivo = $('#activo-caucion').val();
+        let validar1 = $('#ingresado').val();
+        let validar2 = $('#devolver').val();
+        let regExp = /[a-zA-Z]/;
+        // 
+        if (validar1.includes(',')) {
+            $('#ingresado').addClass('invalid');
+            $('#error_ingresado').html('No está permitido usar comas');
+            $('#error_ingresado').removeClass('d-none');
+            return;
+        } else if (regExp.test(validar1)) {
+            $('#ingresado').addClass('invalid');
+            $('#error_ingresado').html('Solo números');
+            $('#error_ingresado').removeClass('d-none');
+            return;
+        } else if (regEvalidar2.includes(',')) {
+            $('#devolver').addClass('invalid');
+            $('#error_devolver').html('Solo números');
+            $('#error_devolver').removeClass('d-none');
+            return;
+        } else if (regExp.test(validar2)) {
+            $('#devolver').addClass('invalid');
+            $('#error_devolver').html('Solo números');
+            $('#error_devolver').removeClass('d-none');
+            return;
+        } else {
+            $('#ingresado').addClass('valid');
+            $('#error_ingresado').addClass('d-none');
+            $('#devolver').addClass('valid');
+            $('#error_devolver').addClass('d-none');
+        }
         let formData = $(this).serialize()+'&activo='+inputactivo;
         $.ajax({
             url:url_hots+'/agregar-caucion',
