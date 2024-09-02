@@ -59,8 +59,8 @@ class CaucionesController extends Controller
         $resumen_cauciones = array(
             'total_cantidad_cauciones' => $cantidad_cauciones,
             'activos' => $activo,
-            'ganancias_mensuales' => $ganancia_mensual,
-            'ganancia_total' => $ganancia_total,
+            'ganancias_mensuales' => HelperController::parsearValor($ganancia_mensual,'$'),
+            'ganancia_total' => HelperController::parsearValor($ganancia_total,'$'),
             'data_completa' => $data_cauciones,
             'data_cauciones_por_periodo' => $data_cauciones_por_periodo
         );

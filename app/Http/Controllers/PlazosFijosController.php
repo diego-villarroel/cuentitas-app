@@ -38,9 +38,9 @@ class PlazosFijosController extends Controller
             'activos' => $activo,
             'activos_tradi' => $activo_tradi,
             'activos_uva' => $activo_uva,
-            'ganancia_activa' => $ganancia_activa,
-            'ganancia_tradi' => $ganancia_tradi,
-            'ganancia_uva' => $ganancia_uva,
+            'ganancia_activa' => HelperController::parsearValor($ganancia_activa,'$'),
+            'ganancia_tradi' => HelperController::parsearValor($ganancia_tradi,'$'),
+            'ganancia_uva' => HelperController::parsearValor($ganancia_uva,'$'),
             'data_pf' => $data_plazos_fijos
         );
         $resumen_plazos_fijos = (object)$resumen_plazos_fijos;

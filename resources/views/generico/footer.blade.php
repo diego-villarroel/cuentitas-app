@@ -2,7 +2,7 @@
         </main>
         <footer class="footer">
             
-            <div class="creado mb-2 pb-3 text-center">
+            <div class="row creado mb-2 pb-3 center-align">
                 Creado por <a class="link-light" href="">DV_DEV</a>
             </div>
             
@@ -137,11 +137,11 @@
             borrarPlazoFijo();
             detallePlazoFijo();
         </script>
-    @elseif ( $_SERVER['REQUEST_URI'] == env('URL_HOST').'/login' )
-        <input type="hidden" id="base_host" value="{{$_SERVER['HTTP_REFERER']}}">
+    @elseif ( $_SERVER['REDIRECT_URL'] == env('URL_HOST').'/login' )
+        <input type="hidden" id="base_host" value="@if (isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {{$_SERVER['HTTP_X_FORWARDED_PROTO']}}://{{$_SERVER['HTTP_HOST']}} @else {{$_SERVER['REQUEST_SCHEME']}}://{{$_SERVER['SERVER_NAME']}} @endif">
         <script src="{{env('URL_HOST')}}/js/login.js?v={{rand()}}"></script>
         <script>
-            validaciones('{{$_SERVER['REQUEST_URI']}}');
+            validaciones('{{$_SERVER['REDIRECT_URL']}}');
         </script>
     @elseif ( $_SERVER['REQUEST_URI'] == env('URL_HOST').'/inversiones' )
         <script src="{{env('URL_HOST')}}/js/inversiones.js?v={{rand()}}"></script>

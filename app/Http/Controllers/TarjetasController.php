@@ -29,7 +29,7 @@ class TarjetasController extends Controller
         }
         $data_resumen = array(
             'impagas' => $impagas,
-            'saldo' => $saldo_total,
+            'saldo' => HelperController::parsearValor($saldo_total,'$'),
             'resumenes_vencidos' => $resumenes_vencidos,
             'resumenes_por_vencer' => $resumenes_por_vencer,
             'data_completa' => $data_resumen

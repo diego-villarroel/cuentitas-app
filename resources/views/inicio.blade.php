@@ -85,7 +85,7 @@
                     <div class="card-content white-text">
                         <span class="card-title">Presupuestos</span>
                         <p>Monto Total:</p>
-                        <h5>{{ $data_presupuestos->total_monto }}</h5>
+                        <h5>$ {{ $data_presupuestos->total_monto }}</h5>
                         <p>Gastado total:</p>
                         <h5>$ {{ $data_presupuestos->total_gastado }}</h5>
                     </div>

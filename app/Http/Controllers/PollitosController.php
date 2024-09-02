@@ -44,7 +44,9 @@ class PollitosController extends Controller
         $usuario = Session::get('usuario');
         Session::flush();
         $log_date = new \DateTime();
-        DB::update("UPDATE pollitos SET login = 0, login_date = '".$log_date->format('Y-m-d H:i:s')."' WHERE id_pollito = ".$usuario['user_id']);
+        if ( isset($usuario['user_id']) ) {
+            DB::update("UPDATE pollitos SET login = 0, login_date = '".$log_date->format('Y-m-d H:i:s')."' WHERE id_pollito = ".$usuario['user_id']);
+        }
 
         return redirect('/');
     }

@@ -15,8 +15,8 @@ class PresupuestoController extends Controller
             $total_gastado += $presu->gastado_presupuesto;
         }
         $data_presupuestos = array(
-            'total_monto' => $total_monto,
-            'total_gastado' => $total_gastado,
+            'total_monto' => HelperController::parsearValor($total_monto,'$'),
+            'total_gastado' => HelperController::parsearValor($total_gastado,'$'),
         );
         $data_presupuestos = (object)$data_presupuestos;
         return $data_presupuestos;

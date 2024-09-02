@@ -24,7 +24,9 @@ body {
         "menu cuerpo"
         "footer footer";
 }
-
+main {
+    min-height: 90vh;;
+}
 .d-none {
     display: none;
 }

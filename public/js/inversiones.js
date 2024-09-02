@@ -109,6 +109,9 @@ function agregarInversion() {
             url:url_hots+'/agregar-inversion',
             method: 'post',
             data: formData,
+            beforeSend: function(){
+                $('#btn-add-inversion').prop('disabled',true);
+            },
             success: function(resp){
                 if (resp == '1') {
                     M.toast({html: 'Tipo de Presupuesto agregado con éxito! Recargando ...', classes: 'rounded green'});
@@ -117,8 +120,10 @@ function agregarInversion() {
                     }, 3000);
                 } else if (resp == '2') {
                     M.toast({html: 'Existe un registro similar, cambiá el nombre por favor.', classes: 'rounded orange'});
+                    $('#btn-add-inversion').prop('disabled',false);
                 } else {
                     M.toast({html: 'Ups! Ocurrió un error al agregar un nuevo Tipo de Presupuesto. Intenta nuevamente', classes: 'rounded red'});
+                    $('#btn-add-inversion').prop('disabled',false);
                 }
             },
             error: function(resp){
@@ -127,6 +132,7 @@ function agregarInversion() {
                 } else {
                     M.toast({html: 'Ups! Ocurrió un error al agregar Tipo de Presupuesto. Intenta nuevamente', classes: 'rounded red'});
                 }
+                $('#btn-add-inversion').prop('disabled',false);
             },
         })
     });
@@ -146,6 +152,9 @@ function borrarInversion() {
             url: url_hots+'/borrar-inversion',
             method: 'post',
             data: $('#frm-borrar-inversion').serialize(),
+            beforeSend: function(){
+                $('#confirm_borrar_inv').prop('disabled',true);
+            },
             success: function(resp){
                 if (resp == '1') {
                     M.toast({html: 'Borraste Inversion con éxito! Recargando ...', classes: 'rounded green'});
@@ -154,6 +163,7 @@ function borrarInversion() {
                     }, 2000);
                 } else {
                     M.toast({html: 'Ups! Ocurrió un error al agregar un nuevo Tipo de Presupuesto. Intenta nuevamente', classes: 'rounded red'});
+                    $('#confirm_borrar_inv').prop('disabled',false);
                 }
             },
             error: function(resp){
@@ -162,6 +172,7 @@ function borrarInversion() {
                 } else {
                     M.toast({html: 'Ups! Ocurrió un error al agregar Tipo de Presupuesto. Intenta nuevamente', classes: 'rounded red'});
                 }
+                $('#confirm_borrar_inv').prop('disabled',false);
             },
         })
     });

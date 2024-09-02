@@ -22,8 +22,9 @@
     <div class="input-field col s12 m6">
         <input id="corte" name="corte" type="date" class="validate">
         <label for="corte">Corte</label>
+        <small class="grey-text">(Del periodo en curso)</small>
     </div>
     <div class="col s12 right-align">
-        <button type="submit" class="waves-effect waves-light purple darken-4 btn">Agregar</button>
+        <button type="submit" class="waves-effect waves-light purple darken-4 btn" id="btn-add-res-tarj">Agregar</button>
     </div>
 </form>

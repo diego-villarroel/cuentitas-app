@@ -3,8 +3,8 @@
 // ======================= //
 
 function validaciones(url) {
-    let base_url = $('#base_host').val();
-    let url_hots = $('#url_host').val() != '' ? $('#url_host').val()+'/' : '';
+    let base_url = $('#base_host').val().trim();
+    let url_hots = $('#url_host').val() != '' ? $('#url_host').val() : '';
     let error_email_validacion = 1;
     let validaciones_correctas_pass = 0; // EL VALOR CORRECTO ES 6 (LA SUMA DE LOS VALORES ARBITRARIOS DE CADA VALIDACIÓN (ENTRE 8 Y 20 CARACTERES, QUE TENGA UNA MAYÚSCULA, QUE TENGA NÚMEROS))
     // 
@@ -17,15 +17,18 @@ function validaciones(url) {
             validaciones_correctas_pass = validarPass();            
         });
         $('#login').on('submit',function(e){
+            e.preventDefault();
             $('#err_pass').addClass('hide');
             $('#err_cuenta').addClass('hide');
             $('#logeado_ok').addClass('hide');
-            e.preventDefault();
             if (error_email_validacion == 0 && validaciones_correctas_pass == 6) {
                 $.ajax({
                     method:'post',
-                    url: base_url+url_hots+'logearse',
+                    url: base_url+url_hots+'/logearse',
                     data: $('#login').serialize(),
+                    beforeSend: function(){
+                        $('#logearse').prop('disabled',true);
+                    },
                     success: function(resp){
                         if (resp == 1) {
                             M.toast({html: 'Te logeaste correctamente!', classes: 'rounded green'});
@@ -34,8 +37,10 @@ function validaciones(url) {
                             }, 2000);
                         } else if (resp == 2) {
                             M.toast({html: 'Te equivocaste de clave polli! jijiji', classes: 'rounded red'});
+                            $('#logearse').prop('disabled',false);
                         } else {
                             M.toast({html: 'No tenés cuenta...', classes: 'rounded red'});
+                            $('#logearse').prop('disabled',false);
                         }
                     }
                 })

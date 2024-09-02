@@ -30,6 +30,6 @@
         <small id="error_mora" class="red-text d-none"></small>
     </div>
     <div class="col s12 right-align">
-        <button type="submit" class="waves-effect waves-light purple darken-4 btn">Agregar</button>
+        <button type="submit" class="waves-effect waves-light purple darken-4 btn" id="btn-add-factura">Agregar</button>
     </div>
 </form>

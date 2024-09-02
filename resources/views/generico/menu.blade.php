@@ -29,7 +29,7 @@
         </li>
         <hr>
         <li>
-            <a class="waves-effect waves-teal btn-flat menu-btn" href="{{ env('URL_HOST') }}/cerrar-sesion">⏻ Cerrar Session de {{Session::get('usuario')['nombre']}}</a>
+            <a class="waves-effect waves-teal btn-flat menu-btn" href="{{ env('URL_HOST') }}/cerrar-sesion">🔐 Cerrar Session de {{Session::get('usuario')['nombre']}}</a>
         </li>
     </ul>
     <ul class="mobile-menu">
@@ -60,7 +60,7 @@
         </li>
         <hr>
         <li>
-            <a class="waves-effect waves-teal btn-flat menu-btn tooltipped" href="{{ env('URL_HOST') }}/cerrar-sesion" data-position="right" data-tooltip="Cerrar Session de {{Session::get('usuario')['nombre']}}">⏻</a>
+            <a class="waves-effect waves-teal btn-flat menu-btn tooltipped" href="{{ env('URL_HOST') }}/cerrar-sesion" data-position="right" data-tooltip="Cerrar Session de {{Session::get('usuario')['nombre']}}">🔐</a>
         </li>
     </ul>
 </section>

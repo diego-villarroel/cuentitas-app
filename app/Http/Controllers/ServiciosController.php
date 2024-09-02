@@ -23,7 +23,7 @@ class ServiciosController extends Controller
 
         $data_resumen = array(
             'impagas' => $impagas,
-            'saldo' => $saldo_total,
+            'saldo' => HelperController::parsearValor($saldo_total,'$'),
             'data_completa' => $data_resumen
         );
         $data_resumen = (object)$data_resumen;
@@ -67,7 +67,7 @@ class ServiciosController extends Controller
         }
         $data_facturas = array(
             'impagas' => $impagas,
-            'monto_total' => $saldo_total,
+            'monto_total' => HelperController::parsearValor($saldo_total,'$'),
             'vencidas' => $vencidas,
             'por_vencer' => $por_vencer,
             'data_completa' => $data_completa,

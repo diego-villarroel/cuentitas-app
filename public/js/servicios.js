@@ -49,6 +49,9 @@ function agregarFactura() {
             url:url_hots+'/agregar-factura',
             method: 'post',
             data: formData,
+            beforeSend: function(){
+                $('#btn-add-factura').prop('disabled',true);
+            },
             success: function(resp){
                 if (resp == '1') {
                     M.toast({html: 'Factura agregada con éxito! Recargando ...', classes: 'rounded green'});
@@ -56,9 +59,18 @@ function agregarFactura() {
                         window.location.replace(url_hots+'/servicios');
                     }, 3000);
                 } else {
-                    console.log('error');
+                    M.toast({html: 'Ups! Ocurrió un error al Borrar Gasto. Intenta nuevamente', classes: 'rounded red'});
+                    $('#btn-add-factura').prop('disabled',false);
                 }
-            }
+            },
+            error: function(resp){
+                if (resp.status == 500) {
+                    M.toast({html: 'Ups! Revisá bien los datos enviados e intentá nuevamente', classes: 'rounded orange'});
+                } else {
+                    M.toast({html: 'Ups! Ocurrió un error al Borrar Gasto. Intenta nuevamente', classes: 'rounded red'});
+                }
+                $('#btn-add-factura').prop('disabled',false);
+            },
         })
     });
 
@@ -80,6 +92,9 @@ function addServicio() {
             url:url_hots+'/agregar-servicio',
             method: 'post',
             data: formData,
+            beforeSend: function() {                
+                $('#btn-add-servicio').prop('disabled',true);
+            },
             success: function(resp){
                 if (resp == '1') {
                     M.toast({html: 'Servicio agregado con éxito! Recargando ...', classes: 'rounded green'});
@@ -88,8 +103,10 @@ function addServicio() {
                     }, 3000);
                 } else if (resp == '0') {
                     M.toast({html: 'Existe un registro similar, cambiá el nombre por favor.', classes: 'rounded orange'});
+                    $('#btn-add-servicio').prop('disabled',false);
                 } else {
                     M.toast({html: 'Ups! Ocurrió un error al agregar un nuevo Tipo de Presupuesto. Intenta nuevamente', classes: 'rounded red'});
+                    $('#btn-add-servicio').prop('disabled',false);
                 }
             },
             error: function(resp){
@@ -98,6 +115,7 @@ function addServicio() {
                 } else {
                     M.toast({html: 'Ups! Ocurrió un error al agregar Tipo de Presupuesto. Intenta nuevamente', classes: 'rounded red'});
                 }
+                $('#btn-add-servicio').prop('disabled',false);
             },
         })
     });
@@ -122,16 +140,28 @@ function pagarFactura() {
             url: url_hots+'/pagar-factura',
             method: 'post',
             data: $('#frm-pagar-factura').serialize(),
+            beforeSend: function() {
+                $('#confirm_pagar_factura_servicio').prop('disabled',true);
+            },
             success: function(resp){
                 if (resp == '1') {
                     M.toast({html: 'Pagaste la Factura con éxito! Recargando ...', classes: 'rounded green'});
                     setInterval(() => {
                         window.location.replace(url_hots+'/servicios');
                     }, 2000);
-                } else {
-                    console.log('error');
+                }  else {
+                    M.toast({html: 'Ups! Ocurrió un error al Borrar Gasto. Intenta nuevamente', classes: 'rounded red'});
+                    $('#confirm_pagar_factura_servicio').prop('disabled',false);
                 }
-            }
+            },
+            error: function(resp){
+                if (resp.status == 500) {
+                    M.toast({html: 'Ups! Revisá bien los datos enviados e intentá nuevamente', classes: 'rounded orange'});
+                } else {
+                    M.toast({html: 'Ups! Ocurrió un error al Borrar Gasto. Intenta nuevamente', classes: 'rounded red'});
+                }
+                $('#confirm_pagar_factura_servicio').prop('disabled',false);
+            },
         })
     });
 }
@@ -154,6 +184,9 @@ function borrarFactura() {
             url: url_hots+'/borrar-factura',
             method: 'post',
             data: $('#frm-pagar-factura').serialize(),
+            beforeSend: function() {
+                $('#confirm_borrar_factura_servicio').prop('disabled',true);
+            },
             success: function(resp){
                 if (resp == '1') {
                     M.toast({html: 'Borraste la Factura :( Recargando ...', classes: 'rounded'});
@@ -161,9 +194,18 @@ function borrarFactura() {
                         window.location.replace(url_hots+'/servicios');
                     }, 3000);
                 } else {
-                    M.toast({html: 'Ups! Ocurrió un error al borrar resumen. Intenta nuevamente', classes: 'rounded red'});
+                    M.toast({html: 'Ups! Ocurrió un error al Borrar Gasto. Intenta nuevamente', classes: 'rounded red'});
+                    $('#confirm_borrar_factura_servicio').prop('disabled',false);
                 }
-            }
+            },
+            error: function(resp){
+                if (resp.status == 500) {
+                    M.toast({html: 'Ups! Revisá bien los datos enviados e intentá nuevamente', classes: 'rounded orange'});
+                } else {
+                    M.toast({html: 'Ups! Ocurrió un error al Borrar Gasto. Intenta nuevamente', classes: 'rounded red'});
+                }
+                $('#confirm_borrar_factura_servicio').prop('disabled',false);
+            },
         })
     });
 }

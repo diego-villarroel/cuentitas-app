@@ -12,6 +12,9 @@ function agregarTipoPresupuesto() {
             url:url_hots+'/agregar-tipo-presupuesto',
             method: 'post',
             data: formData,
+            beforeSend: function(){
+                $('#btn-add-tipo-presu').prop('disabled',true);
+            },
             success: function(resp){
                 if (resp == '1') {
                     M.toast({html: 'Tipo de Presupuesto agregado con éxito! Recargando ...', classes: 'rounded green'});
@@ -20,8 +23,10 @@ function agregarTipoPresupuesto() {
                     }, 3000);
                 } else if (resp == '2') {
                     M.toast({html: 'Existe un registro similar, cambiá el nombre por favor.', classes: 'rounded orange'});
+                    $('#btn-add-tipo-presu').prop('disabled',false);
                 } else {
                     M.toast({html: 'Ups! Ocurrió un error al agregar un nuevo Tipo de Presupuesto. Intenta nuevamente', classes: 'rounded red'});
+                    $('#btn-add-tipo-presu').prop('disabled',false);
                 }
             },
             error: function(resp){
@@ -30,6 +35,7 @@ function agregarTipoPresupuesto() {
                 } else {
                     M.toast({html: 'Ups! Ocurrió un error al agregar Tipo de Presupuesto. Intenta nuevamente', classes: 'rounded red'});
                 }
+                $('#btn-add-tipo-presu').prop('disabled',false);
             },
         })
     });
@@ -70,6 +76,9 @@ function presupuesto() {
             url:url_hots+'/agregar-presupuesto',
             method: 'post',
             data: formData,
+            beforeSend: function(){
+                $('#btn-add-presu').prop('disabled',true);
+            },
             success: function(resp){
                 if (resp == '1') {
                     M.toast({html: 'Presupuesto agregado con éxito! Recargando ...', classes: 'rounded green'});
@@ -80,6 +89,7 @@ function presupuesto() {
                 //     M.toast({html: 'Existe un registro similar, cambiá el nombre por favor.', classes: 'rounded orange'});
                 } else {
                     M.toast({html: 'Ups! Ocurrió un error al agregar un nuevo Presupuesto. Intenta nuevamente', classes: 'rounded red'});
+                    $('#btn-add-presu').prop('disabled',false);
                 }
             },
             error: function(resp){
@@ -88,6 +98,7 @@ function presupuesto() {
                 } else {
                     M.toast({html: 'Ups! Ocurrió un error al agregar Presupuesto. Intenta nuevamente', classes: 'rounded red'});
                 }
+                $('#btn-add-presu').prop('disabled',false);
             },
         })
     });
@@ -108,16 +119,28 @@ function presupuesto() {
             url: url_hots+'/borrar-presupuesto',
             method: 'post',
             data: $('#frm-accion-gastos-presupuesto').serialize(),
+            beforeSend: function() {
+                $('#confirm_borrar_presu').prop('disabled',true);
+            },
             success: function(resp){
                 if (resp == '1') {
                     M.toast({html: 'Borraste Presupuesto con éxito! Recargando ...', classes: 'rounded green'});
                     setInterval(() => {
                         window.location.replace(url_hots+'/presupuesto');
-                    }, 2000);
+                    }, 2000);                
                 } else {
-                    console.log('error');
+                    M.toast({html: 'Ups! Ocurrió un error al agregar un nuevo Presupuesto. Intenta nuevamente', classes: 'rounded red'});
+                    $('#confirm_borrar_presu').prop('disabled',false);
                 }
-            }
+            },
+            error: function(resp){
+                if (resp.status == 500) {
+                    M.toast({html: 'Ups! Revisá bien los datos enviados e intentá nuevamente', classes: 'rounded orange'});
+                } else {
+                    M.toast({html: 'Ups! Ocurrió un error al agregar Presupuesto. Intenta nuevamente', classes: 'rounded red'});
+                }
+                $('#confirm_borrar_presu').prop('disabled',false);
+            },
         })
     });
     // GRAFICOS
@@ -202,6 +225,9 @@ function gastoPresupuesto() {
             url:url_hots+'/generar-gasto',
             method: 'post',
             data: formData,
+            beforeSend: function() {
+                $('#btn-add-gasto').prop('disabled',true);
+            },
             success: function(resp){
                 if (resp == '1') {
                     M.toast({html: 'Gastaste con éxito! Recargando ...', classes: 'rounded green'});
@@ -210,6 +236,7 @@ function gastoPresupuesto() {
                     }, 3000);
                 } else {
                     M.toast({html: 'Ups! Ocurrió un error al Gastar. Intenta nuevamente', classes: 'rounded red'});
+                    $('#btn-add-gasto').prop('disabled',false);
                 }
             },
             error: function(resp){
@@ -218,6 +245,7 @@ function gastoPresupuesto() {
                 } else {
                     M.toast({html: 'Ups! Ocurrió un error al Gastar. Intenta nuevamente', classes: 'rounded red'});
                 }
+                $('#btn-add-gasto').prop('disabled',false);
             },
         })
     });
@@ -238,6 +266,9 @@ function gastoPresupuesto() {
             url: url_hots+'/borrar-gasto',
             method: 'post',
             data: $('#frm-accion-gastos-presupuesto').serialize(),
+            beforeSend: function(){
+                $('#confirm_borrar_gasto').prop('disabled',true);
+            },
             success: function(resp){
                 if (resp == '1') {
                     M.toast({html: 'Borraste Gasto con éxito! Recargando ...', classes: 'rounded green'});
@@ -246,6 +277,7 @@ function gastoPresupuesto() {
                     }, 2000);
                 } else {
                     M.toast({html: 'Ups! Ocurrió un error al Borrar Gasto. Intenta nuevamente', classes: 'rounded red'});
+                    $('#confirm_borrar_gasto').prop('disabled',false);
                 }
             },
             error: function(resp){
@@ -254,35 +286,8 @@ function gastoPresupuesto() {
                 } else {
                     M.toast({html: 'Ups! Ocurrió un error al Borrar Gasto. Intenta nuevamente', classes: 'rounded red'});
                 }
+                $('#confirm_borrar_gasto').prop('disabled',false);
             },
-        })
-    })
-    // $('#borrar-gasto-presupuesto').on('submit',function(e){
-    //     e.preventDefault();
-    //     let formData = $(this).serialize();
-    //     $.ajax({
-    //         url:url_hots+'/borrar-gasto',
-    //         method: 'post',
-    //         data: formData,
-    //         success: function(resp){
-    //             if (resp == '1') {
-    //                 M.toast({html: 'Borraste gasto con éxito! Recargando ...', classes: 'rounded green'});
-    //                 setInterval(() => {
-    //                     window.location.replace(url_hots+'/presupuesto');
-    //                 }, 3000);
-    //             // } else if (resp == '2') {
-    //             //     M.toast({html: 'Existe un registro similar, cambiá el nombre por favor.', classes: 'rounded orange'});
-    //             } else {
-    //                 M.toast({html: 'Ups! Ocurrió un error al Borrar Gasto. Intenta nuevamente', classes: 'rounded red'});
-    //             }
-    //         },
-    //         error: function(resp){
-    //             if (resp.status == 500) {
-    //                 M.toast({html: 'Ups! Revisá bien los datos enviados e intentá nuevamente', classes: 'rounded orange'});
-    //             } else {
-    //                 M.toast({html: 'Ups! Ocurrió un error al Borrar Gasto. Intenta nuevamente', classes: 'rounded red'});
-    //             }
-    //         },
-    //     })
-    // });
+        });
+    });
 }

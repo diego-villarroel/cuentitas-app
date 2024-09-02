@@ -41,6 +41,6 @@
         <label for="descripcion">Descripción</label>
     </div>
     <div class="col s12 right-align">
-        <button type="submit" class="waves-effect waves-light purple darken-4 btn">Agregar</button>
+        <button type="submit" class="waves-effect waves-light purple darken-4 btn" id="btn-add-inversion">Agregar</button>
     </div>
 </form>

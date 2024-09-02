@@ -27,7 +27,7 @@
                                         @endif
                                     </h5>
                                     <p>Monto:</p>
-                                    <h5>${{$resumen->monto}}</h5>
+                                    <h5>${{$resumen->monto_string}}</h5>
                                     <p>Corte:</p>
                                     <h5>{{$resumen->corte}}</h5>
                                     <p>Vencimiento:</p>

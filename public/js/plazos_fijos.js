@@ -50,6 +50,9 @@ function agregarPlazoFijo() {
             url:url_hots+'/agregar-plazo-fijo',
             method: 'post',
             data: formData,
+            beforeSend: function(){
+                $('#btn-add-pf').prop('disabled',true);
+            },
             success: function(resp){
                 if (resp == '1') {                    
                     M.toast({html: 'Plazo Fijo agregado con éxito! Recargando ...', classes: 'rounded green'});
@@ -58,7 +61,16 @@ function agregarPlazoFijo() {
                     }, 3000);
                 } else {
                     M.toast({html: 'Ups! Ocurrió un error al agregar un Plazo Fijo. Intenta nuevamente', classes: 'rounded red'});
+                    $('#btn-add-pf').prop('disabled',false);
                 }
+            },
+            error: function(resp){
+                if (resp.status == 500) {
+                    M.toast({html: 'Ups! Revisá bien los datos enviados e intentá nuevamente', classes: 'rounded orange'});
+                } else {
+                    M.toast({html: 'Ups! Ocurrió un error al agregar Tipo de Presupuesto. Intenta nuevamente', classes: 'rounded red'});
+                }
+                $('#btn-add-pf').prop('disabled',false);
             }
         })
     });
@@ -85,6 +97,9 @@ function borrarPlazoFijo() {
             url: url_hots+'/borrar-plazo-fijo',
             method: 'post',
             data: $('#frm-borrar-pf').serialize(),
+            beforeSend: function() {
+                $('#confirm_borrar_pf').prop('disabled',true);
+            },
             success: function(resp){
                 if (resp == '1') {
                     M.toast({html: 'Borraste el Plazo Fijo :( Recargando ...', classes: 'rounded violet'});
@@ -93,7 +108,16 @@ function borrarPlazoFijo() {
                     }, 2000);
                 } else {
                     M.toast({html: 'Ups! Ocurrió un error al borrar un Plazo Fijo. Intenta nuevamente', classes: 'rounded red'});
+                    $('#confirm_borrar_pf').prop('disabled',false);
                 }
+            },
+            error: function(resp){
+                if (resp.status == 500) {
+                    M.toast({html: 'Ups! Revisá bien los datos enviados e intentá nuevamente', classes: 'rounded orange'});
+                } else {
+                    M.toast({html: 'Ups! Ocurrió un error al agregar Tipo de Presupuesto. Intenta nuevamente', classes: 'rounded red'});
+                }
+                $('#confirm_borrar_pf').prop('disabled',false);
             }
         })
     });
